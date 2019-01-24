@@ -1,0 +1,19 @@
+.header{
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.button_div{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  text-align: center;
+}
+
+.buttons{
+  padding: 20px;
+  margin: 5px;
+  width: 400px;
+  font-family: serif;
+  font-size: 40px;
+}
