@@ -25,9 +25,19 @@ const serveFile = function(req, res) {
   });
 };
 
+const readPostBody = function(req, res, next) {
+  let content = '';
+  req.on('data', chunk => (content += chunk));
+  req.on('end', () => {
+    req.body = content;
+    next();
+  });
+};
+
 module.exports = {
   serveFile,
   resolveRequestedRoute,
   send,
-  logRequest
+  logRequest,
+  readPostBody
 };

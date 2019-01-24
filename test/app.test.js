@@ -1,10 +1,5 @@
 const expect = require('chai').expect;
-const {
-  serveFile,
-  resolveRequestedRoute,
-  send,
-  logRequest
-} = require('../src/handlers');
+const { resolveRequestedRoute, send } = require('../src/handlers');
 
 describe('send', () => {
   beforeEach(() => {
