@@ -11,9 +11,49 @@
 }
 
 .buttons{
-  padding: 20px;
   margin: 5px;
   width: 400px;
   font-family: serif;
-  font-size: 40px;
+  font-size: 20px;
+}
+
+.todo{
+  margin:10px;
+  width: 800px;
+  height: 500px;
+  border: 1px solid black;
+}
+
+.create_todo{
+  text-align: center;
+  margin:10px;
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+}
+
+.create_todo_form{
+  margin: 25% auto;
+}
+
+.todo_interface{
+  display: flex;
+}
+
+input{
+  margin:5px;
+  padding: 5px;
+  width: 250px;
+  height: 20px;
+}
+
+button{
+  border-radius: 5px;
+  margin:5px;
+  padding: 5px;
+  width: 100px;
+  height: 40px;
+}
+a{
+  text-decoration: none;
 }
