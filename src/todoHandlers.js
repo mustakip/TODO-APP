@@ -1,14 +1,21 @@
 const Todo = require('../src/model/todo');
+const TodoList = require('../src/model/todoList');
 const fs = require('fs');
 const { USERS_TODO, UTF8 } = require('./constants');
 const { send } = require('./handlers');
+
+const createTodoList = function(req, res, next) {
+  const newTodoList = new TodoList({ id: 0, todoLists: {} });
+  fs.writeFile(USERS_TODO, JSON.stringify(newTodoList), () => {});
+  next();
+};
 
 const createTodoJson = function() {
   const todoCollection = fs.readFileSync(USERS_TODO, UTF8);
   return JSON.parse(todoCollection);
 };
 
-const todoCollection = createTodoJson();
+let todoCollection = createTodoJson();
 
 const initialiseTodo = function(requestBody) {
   const todoDetails = JSON.parse(requestBody);
@@ -24,21 +31,23 @@ const writeAndResponse = function(res, todoCollection) {
 };
 
 const createTodo = function(req, res) {
+  todoCollection = new TodoList(todoCollection);
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
-  todoCollection.push(todo);
+  todoCollection.addTodo(todo);
   writeAndResponse(res, todoCollection);
 };
 
 const addTask = function(req, res) {
   const task = req.body;
-  const todoDetails = new Todo(todoCollection[0]);
-  todoDetails.addTask(task);
-  todoCollection[0] = todoDetails;
+  const currentTodo = new Todo(todoCollection.todoLists[1]);
+  currentTodo.addTask(task);
+  todoCollection.todoLists[1] = currentTodo;
   writeAndResponse(res, todoCollection);
 };
 
 module.exports = {
   createTodo,
-  addTask
+  addTask,
+  createTodoList
 };

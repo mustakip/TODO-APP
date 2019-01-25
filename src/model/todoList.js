@@ -1,7 +1,7 @@
 class TodoList {
-  constructor() {
-    this.id = 0;
-    this.todoLists = {};
+  constructor(ListDetails) {
+    this.id = ListDetails.id;
+    this.todoLists = ListDetails.todoLists;
   }
 
   updateID() {

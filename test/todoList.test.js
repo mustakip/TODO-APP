@@ -3,8 +3,14 @@ const Todo = require('../src/model/todo');
 const expect = require('chai').expect;
 
 describe('todoList', () => {
+  beforeEach(() => {
+    todoList = new TodoList({
+      id: 0,
+      todoLists: new Object()
+    });
+  });
+
   it('should create a new Todo List', () => {
-    const todoList = new TodoList();
     expect(todoList)
       .have.a.property('id')
       .equals(0);
@@ -14,7 +20,6 @@ describe('todoList', () => {
   });
 
   it('should update the id', () => {
-    const todoList = new TodoList();
     todoList.updateID();
     expect(todoList)
       .to.have.property('id')
@@ -22,8 +27,12 @@ describe('todoList', () => {
   });
 
   it('should add a new todo', () => {
-    const todoList = new TodoList();
-    const todo = new Todo('office', 'birthday');
+    const todo = new Todo({
+      title: 'office',
+      description: 'birthday',
+      id: 0,
+      todoTasks: {}
+    });
     todoList.addTodo(todo);
     expect(todoList)
       .to.have.property('todoLists')
@@ -31,9 +40,18 @@ describe('todoList', () => {
   });
 
   it('should delete todo of the given id', () => {
-    const todoList = new TodoList();
-    const todo1 = new Todo('office', 'birthday');
-    const todo2 = new Todo('home', 'birthday');
+    const todo1 = new Todo({
+      title: 'office',
+      description: 'birthday',
+      id: 0,
+      todoTasks: {}
+    });
+    const todo2 = new Todo({
+      title: 'home',
+      description: 'birthday',
+      id: 0,
+      todoTasks: {}
+    });
     todoList.addTodo(todo1);
     todoList.addTodo(todo2);
     todoList.deleteTodo(2);
