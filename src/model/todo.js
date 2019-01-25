@@ -12,7 +12,7 @@ class Todo {
 
   addTask(description) {
     this.updateID();
-    this.todoTasks[this.id] = { Task: description, done: false };
+    this.todoTasks[this.id] = { task: description, done: false };
   }
 
   deleteTask(id) {
@@ -28,7 +28,7 @@ class Todo {
   }
 
   editTask(id, description) {
-    this.todoTasks[id].Task = description;
+    this.todoTasks[id].task = description;
   }
 
   editTitle(newTitle) {
@@ -38,3 +38,5 @@ class Todo {
     this.description = newDescription;
   }
 }
+
+module.exports = Todo;

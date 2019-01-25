@@ -17,3 +17,5 @@ class TodoList {
     delete this.todoLists[id];
   }
 }
+
+module.exports = TodoList;
