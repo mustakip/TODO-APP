@@ -1,9 +1,9 @@
 class Todo {
-  constructor(title, description) {
-    this.title = title;
-    this.description = description;
-    this.id = 0;
-    this.todoTasks = {};
+  constructor(todoDetails) {
+    this.title = todoDetails.title;
+    this.description = todoDetails.description;
+    this.id = todoDetails.id;
+    this.todoTasks = todoDetails.todoTasks;
   }
 
   updateID() {

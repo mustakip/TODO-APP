@@ -3,7 +3,12 @@ const expect = require('chai').expect;
 
 describe('Todo', () => {
   beforeEach(() => {
-    todo = new Todo('office', 'birthday');
+    todo = new Todo({
+      title: 'office',
+      description: 'birthday',
+      id: 0,
+      todoTasks: {}
+    });
   });
 
   it('should create a new Todo', () => {

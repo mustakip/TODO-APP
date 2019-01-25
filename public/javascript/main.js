@@ -14,6 +14,10 @@ const fetchTitleAndDescription = function() {
 
 const addTask = function() {
   const task = getTask(document);
+  fetch('/addTask', {
+    method: 'POST',
+    body: task
+  });
   const list = document.getElementById('tasks');
   list.innerHTML += `<li> ${task}</li>`;
 };
