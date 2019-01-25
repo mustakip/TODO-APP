@@ -3,6 +3,7 @@
   <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="stylesheet/main.css" />
+    <script src="/javascript/main.js"></script>
   </head>
   <body>
     <div class="header">
@@ -14,10 +15,10 @@
 
       <div class="create_todo">
         <div class="create_todo_form">
-          <form action="" method="post">
-            <input type="text" id="title" placeholder="title"/><br />
-            <input type="text" id="description" placeholder="description"/><br />
-            <button type="submit">Create Todo</button>
+          <form action="" method="POST">
+            <input type="text" id="title" placeholder="title" name="title"/><br />
+            <input type="text" id="description" placeholder="description" name="description"/><br />
+            <button type="submit" id = "create_todo_btn">Create Todo</button>
           </form>
         </div>
       </div>
