@@ -40,6 +40,17 @@
   display: flex;
 }
 
+.todo{
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.todo_item{
+  border: 1px solid black;
+  padding: 15px;
+}
+
 input{
   margin:5px;
   padding: 5px;
