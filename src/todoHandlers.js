@@ -3,20 +3,10 @@ const TodoList = require('../src/model/todoList');
 const fs = require('fs');
 const { USERS_TODO, UTF8 } = require('./constants');
 const { send } = require('./handlers');
-const { getUsersTodo } = require('./utils');
+const { getUsersTodo, getSessions } = require('./utils');
 
-const createTodoList = function(req, res, next) {
-  const newTodoList = new TodoList({ id: 0, todoLists: {} });
-  fs.writeFile(USERS_TODO, JSON.stringify(newTodoList), () => {});
-  next();
-};
-
-const createTodoJson = function() {
-  const todoCollection = fs.readFileSync(USERS_TODO, UTF8);
-  return JSON.parse(todoCollection);
-};
-
-let todoCollection = createTodoJson();
+let todoCollection = getUsersTodo();
+const activeSessions = getSessions();
 
 const initialiseTodo = function(requestBody) {
   const todoDetails = JSON.parse(requestBody);
@@ -30,25 +20,32 @@ const writeAndResponse = function(res, todoCollection) {
     send(res, JSON.stringify(todoCollection));
   });
 };
+const getCurrenUser = function(req) {
+  const cookie = req.headers.cookie;
+  const sessionId = cookie.split('=')[1];
+  return activeSessions[sessionId];
+};
 
 const createTodo = function(req, res) {
-  todoCollection = new TodoList(todoCollection);
+  const currentUser = getCurrenUser(req);
+  todoCollection[currentUser] = new TodoList(todoCollection[currentUser]);
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
-  todoCollection.addTodo(todo);
+  todoCollection[currentUser].addTodo(todo);
   writeAndResponse(res, todoCollection);
 };
 
 const addTask = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  todoCollection[currentUser] = new TodoList(todoCollection[currentUser]);
   const task = req.body;
-  const currentTodo = new Todo(todoCollection.todoLists[1]);
+  const currentTodo = new Todo(todoCollection[currentUser].todoLists[1]);
   currentTodo.addTask(task);
-  todoCollection.todoLists[1] = currentTodo;
+  todoCollection[currentUser].todoLists[1] = currentTodo;
   writeAndResponse(res, todoCollection);
 };
 
 module.exports = {
   createTodo,
-  addTask,
-  createTodoList
+  addTask
 };
