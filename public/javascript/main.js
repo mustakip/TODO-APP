@@ -15,8 +15,13 @@ const fetchTitleAndDescription = function() {
     });
 };
 
+const fetchTodo = function(id) {
+  document.cookie = 'todo=' + id;
+  window.location.href = '/todo.html';
+};
+
 const createTodoHTML = function(id, title, description) {
-  return `<div class="todo_div">
+  return `<div id=${id} class="todo_div" onclick="fetchTodo(${id})">
           <h1>${id}. ${title}</h1>
           <h4>${description}</h4>
           </div>`;
@@ -44,5 +49,5 @@ const fetchTodoJson = function() {
 
 window.onload = () => {
   document.getElementById('create_todo_btn').onclick = fetchTitleAndDescription;
-  fetchTodoJson();
+  document.getElementById('todo_list').onclick = fetchTodoJson();
 };

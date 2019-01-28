@@ -21,8 +21,7 @@ const writeAndResponse = function(res, todoCollection, currentUser) {
 
 const getCurrenUser = function(req) {
   const activeSessions = getSessions();
-  const cookie = req.headers.cookie;
-  const sessionId = cookie.split('=')[1];
+  const sessionId = req.cookies.session;
   return activeSessions[sessionId];
 };
 
@@ -46,8 +45,16 @@ const provideTodos = function(req, res) {
   send(res, JSON.stringify(todoCollection[currentUser]));
 };
 
+const provideCurrentTodo = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const id = req.body;
+  const todo = todoCollection[currentUser].todoLists[id];
+  send(res, JSON.stringify(todo));
+};
+
 module.exports = {
   createTodo,
   addTask,
-  provideTodos
+  provideTodos,
+  provideCurrentTodo
 };

@@ -25,6 +25,19 @@ const serveFile = function(req, res) {
   });
 };
 
+const readCookie = function(req, res, next) {
+  const cookie = req.headers.cookie;
+  const cookies = {};
+  if (cookie) {
+    cookie.split(';').forEach(element => {
+      const [name, value] = element.split('=');
+      cookies[name.trim()] = value.trim();
+    });
+  }
+  req.cookies = cookies;
+  next();
+};
+
 const readPostBody = function(req, res, next) {
   let content = '';
   req.on('data', chunk => (content += chunk));
@@ -39,5 +52,6 @@ module.exports = {
   resolveRequestedRoute,
   send,
   logRequest,
-  readPostBody
+  readPostBody,
+  readCookie
 };
