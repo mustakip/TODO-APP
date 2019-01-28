@@ -1,4 +1,4 @@
-const getTasksHTML = function(tasks) {
+const generateTaskView = function(tasks) {
   const taskIDs = Object.keys(tasks);
   const taskHTML = taskIDs.map(id => `<li>${tasks[id].task}</li>`);
   return `<ul>${taskHTML.join('')}</ul>`;
@@ -13,7 +13,7 @@ const displayTodo = function(todo) {
   const titleDiv = getTitleDiv(document);
   const descriptionDiv = getDescriptionDiv(document);
   const tasksDiv = getTasksDiv(document);
-  const tasksHTML = getTasksHTML(todo.todoTasks);
+  const tasksHTML = generateTaskView(todo.todoTasks);
   titleDiv.innerText = todo.title;
   descriptionDiv.innerText = todo.description;
   tasksDiv.innerHTML = tasksHTML;

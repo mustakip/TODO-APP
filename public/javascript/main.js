@@ -20,7 +20,7 @@ const fetchTodo = function(id) {
   window.location.href = '/todo.html';
 };
 
-const createTodoHTML = function(id, title, description) {
+const generateTodoView = function(id, title, description) {
   return `<div id=${id} class="todo_div" onclick="fetchTodo(${id})">
           <h1>${id}. ${title}</h1>
           <h4>${description}</h4>
@@ -32,7 +32,7 @@ const getDescription = (todos, id) => todos.todoLists[id].description;
 
 const displayExistingTodos = function(todos) {
   const todoHTML = Object.keys(todos.todoLists).map(id =>
-    createTodoHTML(id, getTitle(todos, id), getDescription(todos, id))
+    generateTodoView(id, getTitle(todos, id), getDescription(todos, id))
   );
 
   const todoDiv = getTodoDiv(document);
