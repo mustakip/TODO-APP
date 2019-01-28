@@ -3,6 +3,9 @@ const TodoList = require('../src/model/todoList');
 const fs = require('fs');
 const { USERS_TODO, UTF8 } = require('./constants');
 const { send } = require('./handlers');
+const { getUsersTodo } = require('./utils');
+
+const usersTodo = getUsersTodo();
 
 const createTodoList = function(req, res, next) {
   const newTodoList = new TodoList({ id: 0, todoLists: {} });
@@ -30,7 +33,10 @@ const writeAndResponse = function(res, todoCollection) {
   });
 };
 
+const getUser = req => req.headers.cookie.split('=')[1];
+
 const createTodo = function(req, res) {
+  const currentUser = getUser(req);
   todoCollection = new TodoList(todoCollection);
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);

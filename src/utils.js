@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { USERS_TODO, USER_JSON, UTF8 } = require('./constants');
+const { USERS_TODO, USER_JSON, UTF8, SESSIONS_JSON } = require('./constants');
 
 const createKeyValue = function(text) {
   const keyValuePair = new Object();
@@ -7,6 +7,11 @@ const createKeyValue = function(text) {
   const assignKeyValue = ([key, value]) => (keyValuePair[key] = value);
   splittedText.forEach(assignKeyValue);
   return keyValuePair;
+};
+
+const getSessions = function() {
+  const sessions = fs.readFileSync(SESSIONS_JSON, UTF8);
+  return JSON.parse(sessions);
 };
 
 const getUsers = function() {
@@ -25,4 +30,10 @@ const redirectTo = function(res, location) {
   res.end();
 };
 
-module.exports = { createKeyValue, redirectTo, getUsers, getUsersTodo };
+module.exports = {
+  createKeyValue,
+  redirectTo,
+  getUsers,
+  getUsersTodo,
+  getSessions
+};
