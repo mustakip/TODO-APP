@@ -8,7 +8,12 @@ const {
   readPostBody,
   readCookie
 } = require('./handlers');
-const { createTodo, addTask, provideTodos } = require('./todoHandlers');
+const {
+  createTodo,
+  addTask,
+  provideTodos,
+  provideCurrentTodo
+} = require('./todoHandlers');
 
 app.use(logRequest);
 app.use(readPostBody);
@@ -18,6 +23,7 @@ app.post('/login', loginHandler);
 app.post('/createTodo', createTodo);
 app.post('/addTask', addTask);
 app.get('/todos', provideTodos);
+app.get('/getTodo', provideCurrentTodo);
 app.use(serveFile);
 
 module.exports = app.handleRequest.bind(app);

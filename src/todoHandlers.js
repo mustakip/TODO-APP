@@ -36,8 +36,11 @@ const createTodo = function(req, res) {
 const addTask = function(req, res) {
   const currentUser = getCurrenUser(req);
   const task = req.body;
-  todoCollection[currentUser].todoLists[1].addTask(task);
-  writeAndResponse(res, todoCollection, currentUser);
+  const id = req.cookies.todo;
+  todoCollection[currentUser].todoLists[id].addTask(task);
+  fs.writeFile(USERS_TODO, JSON.stringify(todoCollection), () => {
+    send(res, JSON.stringify(todoCollection[currentUser].todoLists[id]));
+  });
 };
 
 const provideTodos = function(req, res) {
@@ -47,7 +50,7 @@ const provideTodos = function(req, res) {
 
 const provideCurrentTodo = function(req, res) {
   const currentUser = getCurrenUser(req);
-  const id = req.body;
+  const id = req.cookies.todo;
   const todo = todoCollection[currentUser].todoLists[id];
   send(res, JSON.stringify(todo));
 };
