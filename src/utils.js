@@ -1,5 +1,7 @@
 const fs = require('fs');
 const { USERS_TODO, USER_JSON, UTF8, SESSIONS_JSON } = require('./constants');
+const TodoList = require('./model/todoList');
+const Todo = require('./model/todo');
 
 const createKeyValue = function(text) {
   const keyValuePair = new Object();
@@ -20,8 +22,18 @@ const getUsers = function() {
 };
 
 const getUsersTodo = function() {
-  const usersTodo = fs.readFileSync(USERS_TODO, UTF8);
-  return JSON.parse(usersTodo);
+  const usersTodo = JSON.parse(fs.readFileSync(USERS_TODO, UTF8));
+  const userIds = Object.keys(usersTodo);
+  userIds.forEach(userid => {
+    usersTodo[userid] = new TodoList(usersTodo[userid]);
+    const todos = Object.keys(usersTodo[userid].todoLists);
+    todos.forEach(todo => {
+      usersTodo[userid].todoLists[todo] = new Todo(
+        usersTodo[userid].todoLists[todo]
+      );
+    });
+  });
+  return usersTodo;
 };
 
 const redirectTo = function(res, location) {

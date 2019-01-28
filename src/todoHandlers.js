@@ -28,7 +28,6 @@ const getCurrenUser = function(req) {
 
 const createTodo = function(req, res) {
   const currentUser = getCurrenUser(req);
-  todoCollection[currentUser] = new TodoList(todoCollection[currentUser]);
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
   todoCollection[currentUser].addTodo(todo);
@@ -37,11 +36,8 @@ const createTodo = function(req, res) {
 
 const addTask = function(req, res) {
   const currentUser = getCurrenUser(req);
-  todoCollection[currentUser] = new TodoList(todoCollection[currentUser]);
   const task = req.body;
-  const currentTodo = new Todo(todoCollection[currentUser].todoLists[1]);
-  currentTodo.addTask(task);
-  todoCollection[currentUser].todoLists[1] = currentTodo;
+  todoCollection[currentUser].todoLists[1].addTask(task);
   writeAndResponse(res, todoCollection);
 };
 
