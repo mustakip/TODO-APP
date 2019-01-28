@@ -21,19 +21,26 @@ const getUsers = function() {
   return JSON.parse(users);
 };
 
+const retainTodoMethods = function(todoList) {
+  const newTodoList = new TodoList(todoList);
+  const todos = Object.keys(newTodoList.todoLists);
+  todos.forEach(todo => {
+    newTodoList.todoLists[todo] = new Todo(newTodoList.todoLists[todo]);
+  });
+  return newTodoList;
+};
+
+const retainTodoListMethods = function(userIds, usersTodo) {
+  userIds.forEach(userid => {
+    usersTodo[userid] = retainTodoMethods(usersTodo[userid]);
+  });
+  return usersTodo;
+};
+
 const getUsersTodo = function() {
   const usersTodo = JSON.parse(fs.readFileSync(USERS_TODO, UTF8));
   const userIds = Object.keys(usersTodo);
-  userIds.forEach(userid => {
-    usersTodo[userid] = new TodoList(usersTodo[userid]);
-    const todos = Object.keys(usersTodo[userid].todoLists);
-    todos.forEach(todo => {
-      usersTodo[userid].todoLists[todo] = new Todo(
-        usersTodo[userid].todoLists[todo]
-      );
-    });
-  });
-  return usersTodo;
+  return retainTodoListMethods(userIds, usersTodo);
 };
 
 const redirectTo = function(res, location) {
