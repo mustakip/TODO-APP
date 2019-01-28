@@ -3,18 +3,16 @@
   <head>
     <title>Log In</title>
     <link rel="stylesheet" type="text/css" href="/stylesheet/main.css" />
-    <script src="/javascript/main.js"></script>
-
   </head>
   <body>
     <div class="header">
       <h1><a href="/index.html">MY TODO APP</a></h1>
     </div>
     <div class="button_div">
-      <form method="POST">
-        <input type="text" placeholder="username" name="username" required /><br />
+      <form action="/login" method="POST">
+        <input type="text" placeholder="username" name="userid" required /><br />
         <input type="password" placeholder="password" name="password" required /><br />
-        <button type="submit"><a href="/home.html">Login</a></button>
+        <button type="submit">Login</button>
       </form>
     </div>
   </body>
