@@ -40,15 +40,20 @@
   display: flex;
 }
 
+.todo_div {
+  border:1px solid black;
+}
+
 .todo{
-  padding: 15px;
+  padding: 5px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .todo_item{
   border: 1px solid black;
-  padding: 15px;
+  padding: 10px;
+  margin: 2px;
 }
 
 input{

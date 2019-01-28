@@ -5,53 +5,44 @@ const createElement = element => document.createElement(element);
 const fetchTitleAndDescription = function() {
   const title = document.getElementById('title').value;
   const description = document.getElementById('description').value;
-  createTodo(title, description);
   fetch('/createTodo', {
     method: 'POST',
     body: JSON.stringify({ title, description })
-  });
+  })
+    .then(response => response.json())
+    .then(todos => {
+      displayExistingTodos(todos);
+    });
 };
 
-const addTask = function() {
-  const task = getTask(document);
-  fetch('/addTask', {
-    method: 'POST',
-    body: task
-  });
-  const list = document.getElementById('tasks');
-  list.innerHTML += `<li> ${task}</li>`;
+const createTodoHTML = function(id, title, description) {
+  return `<div class="todo_div">
+          <h1>${id}. ${title}</h1>
+          <h4>${description}</h4>
+          </div>`;
 };
 
-const createTodoTask = function() {
-  const tasks = createElement('ul');
-  tasks.id = 'tasks';
-  return tasks;
-};
+const getTitle = (todos, id) => todos.todoLists[id].title;
+const getDescription = (todos, id) => todos.todoLists[id].description;
 
-const decorateTodo = function(title, description) {
-  return `<h2> ${title}</h2>
-          <h3> ${description}</h3>
-          <input type= "text" id="task" />
-          <button id="add_task">Add task</button>`;
-};
+const displayExistingTodos = function(todos) {
+  const todoHTML = Object.keys(todos.todoLists).map(id =>
+    createTodoHTML(id, getTitle(todos, id), getDescription(todos, id))
+  );
 
-const createTodoAttributes = function(title, description) {
-  const todo = createElement('div');
-  todo.className = 'todo_item';
-  todo.id = 'todo_item';
-  todo.innerHTML = decorateTodo(title, description);
-  todo.appendChild(createTodoTask());
-  return todo;
-};
-
-const createTodo = function(title, description) {
   const todoDiv = getTodoDiv(document);
-  const todo = createTodoAttributes(title, description);
+  todoDiv.innerHTML = todoHTML.join('');
+};
 
-  todoDiv.appendChild(todo);
-  document.getElementById('add_task').onclick = addTask;
+const fetchTodoJson = function() {
+  fetch('/todos')
+    .then(response => response.json())
+    .then(todos => {
+      displayExistingTodos(todos);
+    });
 };
 
 window.onload = () => {
   document.getElementById('create_todo_btn').onclick = fetchTitleAndDescription;
+  fetchTodoJson();
 };
