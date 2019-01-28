@@ -1,16 +1,18 @@
 const getTasksHTML = function(tasks) {
-  const ids = Object.keys(tasks);
-  const taskHTML = ids.map(id => {
-    const task = tasks[id].task;
-    return `<li>${task}</li>`;
-  });
+  const taskIDs = Object.keys(tasks);
+  const taskHTML = taskIDs.map(id => `<li>${tasks[id].task}</li>`);
   return `<ul>${taskHTML.join('')}</ul>`;
 };
 
+const getTitleDiv = document => document.getElementById('todo_title');
+const getDescriptionDiv = document =>
+  document.getElementById('todo_description');
+const getTasksDiv = document => document.getElementById('todo_tasks');
+
 const displayTodo = function(todo) {
-  const titleDiv = document.getElementById('todo_title');
-  const descriptionDiv = document.getElementById('todo_description');
-  const tasksDiv = document.getElementById('todo_tasks');
+  const titleDiv = getTitleDiv(document);
+  const descriptionDiv = getDescriptionDiv(document);
+  const tasksDiv = getTasksDiv(document);
   const tasksHTML = getTasksHTML(todo.todoTasks);
   titleDiv.innerText = todo.title;
   descriptionDiv.innerText = todo.description;
@@ -23,25 +25,17 @@ const addTask = function() {
     method: 'POST',
     body: task
   })
-    .then(res => {
-      return res.json();
-    })
-    .then(todo => {
-      displayTodo(todo);
-    });
+    .then(res => res.json())
+    .then(todo => displayTodo(todo));
 };
 
-const getuserTasks = function() {
+const getUserTasks = function() {
   fetch('/getTodo')
-    .then(res => {
-      return res.json();
-    })
-    .then(todo => {
-      displayTodo(todo);
-    });
+    .then(res => res.json())
+    .then(todo => displayTodo(todo));
 };
 
 window.onload = () => {
   document.getElementById('add_task_btn').onclick = addTask;
-  getuserTasks();
+  getUserTasks();
 };

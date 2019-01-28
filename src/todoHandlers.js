@@ -13,9 +13,9 @@ const initialiseTodo = function(requestBody) {
   return todoDetails;
 };
 
-const writeAndResponse = function(res, todoCollection, currentUser) {
+const writeAndResponse = function(res, todoCollection, content) {
   fs.writeFile(USERS_TODO, JSON.stringify(todoCollection), () => {
-    send(res, JSON.stringify(todoCollection[currentUser]));
+    send(res, JSON.stringify(content));
   });
 };
 
@@ -30,7 +30,7 @@ const createTodo = function(req, res) {
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
   todoCollection[currentUser].addTodo(todo);
-  writeAndResponse(res, todoCollection, currentUser);
+  writeAndResponse(res, todoCollection, todoCollection[currentUser]);
 };
 
 const addTask = function(req, res) {
@@ -38,9 +38,8 @@ const addTask = function(req, res) {
   const task = req.body;
   const id = req.cookies.todo;
   todoCollection[currentUser].todoLists[id].addTask(task);
-  fs.writeFile(USERS_TODO, JSON.stringify(todoCollection), () => {
-    send(res, JSON.stringify(todoCollection[currentUser].todoLists[id]));
-  });
+  const userTodo = todoCollection[currentUser].todoLists[id];
+  writeAndResponse(res, todoCollection, userTodo);
 };
 
 const provideTodos = function(req, res) {
