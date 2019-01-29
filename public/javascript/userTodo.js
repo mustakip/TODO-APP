@@ -20,8 +20,8 @@ const generateTaskViewOptions = function(task, id, status) {
   const toggleId = `${id}toggle_task`;
   return `<div class="task">
           <div id='${id}'>${task}</div><div class="task_options">
-          <button id="${editId}" onclick="displayEditTaskBox(${id})">Edit</button>
-          <button id="${deleteId}" onclick="deleteTask(${id})">Delete</button>
+          <button id="${editId}" onclick="displayEditTaskBox(${id})">&#x270D</button>
+          <button id="${deleteId}" onclick="deleteTask(${id})">&#x274C;</button>
           <button id="${toggleId}" onclick="toggleStatus(${id})">${status}</button></div></div>`;
 };
 
@@ -58,10 +58,15 @@ const editTask = function(taskId) {
     .then(todo => updateTodoPage(todo));
 };
 
+const status = {
+  true: '&#x2705;',
+  false: '&#x2611;&#xFE0F;'
+};
+
 const generateTaskView = function(tasks) {
   const taskIDs = Object.keys(tasks);
   const taskHTML = taskIDs.map(id =>
-    generateTaskViewOptions(tasks[id].task, id, tasks[id].done)
+    generateTaskViewOptions(tasks[id].task, id, status[tasks[id].done])
   );
   return taskHTML.join('');
 };
@@ -77,8 +82,8 @@ const displayTodo = function(todo) {
 };
 
 const updateTodoPage = function(todo) {
-  const editTitleBtn = `<button id="edit_title_btn" onclick="createEditTitleBox()">Edit</button>`;
-  const editDescriptionBtn = `<button id="edit_description_btn" onclick="createEditDescriptionBox()">Edit</button>`;
+  const editTitleBtn = `<button id="edit_title_btn" onclick="createEditTitleBox()">&#x270D</button>`;
+  const editDescriptionBtn = `<button id="edit_description_btn" onclick="createEditDescriptionBox()">&#x270D</button>`;
   getEditTitleDiv(document).innerHTML = editTitleBtn;
   getEditDescriptionDiv(document).innerHTML = editDescriptionBtn;
   displayTodo(todo);

@@ -31,10 +31,10 @@ const deleteTodo = function(id) {
 const generateTodoView = function(id, title, description) {
   return `<div id=${id} class="todo_div" >
            <div onclick="fetchTodo(${id})">
-            <h1>${id}. ${title}</h1>
-            <h4>${description}</h4>
+            <h1>${title}</h1>
+            <h3>${description}</h3>
            </div>
-           <div><button type="submit" onclick="deleteTodo(${id})">Delete</button></div>`;
+           <div><button type="submit" onclick="deleteTodo(${id})">&#x274C;</button></div></div>`;
 };
 
 const getTitle = (todos, id) => todos.todoLists[id].title;

@@ -19,35 +19,31 @@
 
 .todo{
   margin:10px;
-  width: 800px;
-  height: 500px;
-  border: 1px solid black;
 }
 
 .create_todo{
   text-align: center;
   margin:10px;
-  width: 500px;
-  height: 500px;
   border: 1px solid black;
 }
 
 .create_todo_form{
-  margin: 25% auto;
+  /* margin: 25% auto; */
 }
 
 .todo_interface{
   display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10%;
 }
 
 .todo_div {
-  border:1px solid black;
-}
-
-.todo{
-  padding: 5px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  border:1px solid black;
+  padding: 20px;
+  margin: 2px;
 }
 
 .todo_item{
@@ -110,4 +106,8 @@ button{
 }
 a{
   text-decoration: none;
+}
+
+h1{
+  margin: 0px;
 }
