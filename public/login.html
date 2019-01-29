@@ -8,12 +8,18 @@
     <div class="header">
       <h1><a href="/">MY TODO APP</a></h1>
     </div>
-    <div class="button_div">
-      <form action="/login" method="POST">
-        <input type="text" placeholder="username" name="userid" required /><br />
-        <input type="password" placeholder="password" name="password" required /><br />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+
+      <div class="button_div">
+        <div class="login_form">
+          <form action="/login" method="POST">
+            <h1>Log In</h1>
+            <input type="text" placeholder="username" name="userid" required /><br />
+            <input type="password" placeholder="password" name="password" required /><br />
+            <button type="submit">Login</button><br />
+            <a href="/signup.html">Don't have an ID? Create now</a>
+          </form>
+        </div>
+      </div>
+    
   </body>
 </html>

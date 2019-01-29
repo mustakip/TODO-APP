@@ -6,10 +6,25 @@
 }
 
 .button_div{
+  height: 500px;
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  margin:100px auto;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.welcome_page{
   display: flex;
   flex-direction: column;
   margin-top: 100px;
   text-align: center;
+}
+
+
+.login_form{
+  margin: 150px auto;
 }
 
 .buttons{
@@ -26,7 +41,6 @@
 .create_todo{
   text-align: center;
   margin:10px;
-  border: 1px solid black;
 }
 
 
@@ -96,6 +110,10 @@
   margin-left:15%;
   margin-top:100px;
   border:1px solid black;  
+}
+
+.login_form{
+  display: flex;
 }
 
 input{
