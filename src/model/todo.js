@@ -27,6 +27,10 @@ class Todo {
     this.todoTasks[id].done = false;
   }
 
+  toggleStatus(id) {
+    this.todoTasks[id].done = !this.todoTasks[id].done;
+  }
+
   editTask(id, description) {
     this.todoTasks[id].task = description;
   }

@@ -14,14 +14,27 @@ const getEditTitleDiv = document => document.getElementById('edit_title');
 const getEditDescriptionDiv = document =>
   document.getElementById('edit_description');
 
-const generateTaskViewOptions = function(task, id) {
-  ``;
+const generateTaskViewOptions = function(task, id, status) {
   const editId = `${id}edit_task`;
+  const deleteId = `${id}delete_task`;
+  const toggleId = `${id}toggle_task`;
   return `<div class="task">
           <div id='${id}'>${task}</div><div class="task_options">
           <button id="${editId}" onclick="displayEditTaskBox(${id})">Edit</button>
-          <button id="delete_task">Delete</button>
-          <button>Mark Done</button></div></div>`;
+          <button id="${deleteId}" onclick="deleteTask(${id})">Delete</button>
+          <button id="${toggleId}" onclick="toggleStatus(${id})">${status}</button></div></div>`;
+};
+
+const toggleStatus = function(taskId) {
+  fetch('/toggleStatus', { method: 'POST', body: taskId })
+    .then(res => res.json())
+    .then(todo => updateTodoPage(todo));
+};
+
+const deleteTask = function(taskId) {
+  fetch('/deleteTask', { method: 'POST', body: taskId })
+    .then(res => res.json())
+    .then(todo => updateTodoPage(todo));
 };
 
 const displayEditTaskBox = function(id) {
@@ -48,7 +61,7 @@ const editTask = function(taskId) {
 const generateTaskView = function(tasks) {
   const taskIDs = Object.keys(tasks);
   const taskHTML = taskIDs.map(id =>
-    generateTaskViewOptions(tasks[id].task, id)
+    generateTaskViewOptions(tasks[id].task, id, tasks[id].done)
   );
   return taskHTML.join('');
 };

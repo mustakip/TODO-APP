@@ -106,4 +106,13 @@ describe('Todo', () => {
       .to.have.property('description')
       .equals('in office');
   });
+  it('should toggle the status of the tasks', () => {
+    todo.addTask('buy cake');
+    todo.toggleStatus(1);
+    expect(todo)
+      .to.have.property('todoTasks')
+      .to.have.property(1)
+      .to.have.property('done')
+      .equals(true);
+  });
 });

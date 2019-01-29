@@ -88,6 +88,24 @@ const editTask = function(req, res) {
   writeAndRespond(res, todoCollection, currentTodo);
 };
 
+const deleteTask = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const todoId = req.cookies.todo;
+  const taskId = req.body;
+  todoCollection[currentUser].todoLists[todoId].deleteTask(taskId);
+  const currentTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, currentTodo);
+};
+
+const toggleStatus = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const todoId = req.cookies.todo;
+  const taskId = req.body;
+  todoCollection[currentUser].todoLists[todoId].toggleStatus(taskId);
+  const currentTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, currentTodo);
+};
+
 module.exports = {
   createTodo,
   addTask,
@@ -96,5 +114,7 @@ module.exports = {
   editTitle,
   editDescription,
   deleteTodo,
-  editTask
+  editTask,
+  deleteTask,
+  toggleStatus
 };
