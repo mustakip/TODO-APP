@@ -14,10 +14,42 @@ const getEditTitleDiv = document => document.getElementById('edit_title');
 const getEditDescriptionDiv = document =>
   document.getElementById('edit_description');
 
+const generateTaskViewOptions = function(task, id) {
+  const editId = `${id}edit_task`;
+  return `<div class="task">
+          <div id='${id}'>${task}</div><div class="task_options">
+          <button id="${editId}" onclick="displayEditTaskBox(${id})">Edit</button>
+          <button id="delete_task">Delete</button>
+          <button>Mark Done</button></div></div>`;
+};
+
+const displayEditTaskBox = function(id) {
+  const editId = `${id}edit_task`;
+  const newTaskId = `${id}new_task`;
+  const currentTask = document.getElementById(id).textContent;
+  const editButton = document.getElementById(editId);
+  const editTaskBox = `<input type="text" id="${newTaskId}" value="${currentTask}"/>`;
+  document.getElementById(id).innerHTML = editTaskBox;
+  editButton.onclick = editTask.bind(null, id);
+};
+
+const editTask = function(taskId) {
+  const newTaskId = `${id}new_task`;
+  const newTask = document.getElementById(newTaskId).value;
+  fetch('/editTask', {
+    method: 'POST',
+    body: JSON.stringify({ taskId, newTask })
+  })
+    .then(res => res.json())
+    .then(todo => updateTodoPage(todo));
+};
+
 const generateTaskView = function(tasks) {
   const taskIDs = Object.keys(tasks);
-  const taskHTML = taskIDs.map(id => `<li>${tasks[id].task}</li>`);
-  return `<ul>${taskHTML.join('')}</ul>`;
+  const taskHTML = taskIDs.map(id =>
+    generateTaskViewOptions(tasks[id].task, id)
+  );
+  return taskHTML.join('');
 };
 
 const displayTodo = function(todo) {

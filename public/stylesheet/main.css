@@ -83,6 +83,17 @@
   font-size: 30px;
 }
 
+.task {
+  justify-content: space-between;
+  display:flex;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+.task_options{
+  display: flex;
+}
+
 input{
   margin:5px;
   padding: 5px;

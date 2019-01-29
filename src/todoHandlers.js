@@ -13,7 +13,7 @@ const initialiseTodo = function(requestBody) {
   return todoDetails;
 };
 
-const writeAndResponse = function(res, todoCollection, content) {
+const writeAndRespond = function(res, todoCollection, content) {
   fs.writeFile(USERS_TODO, JSON.stringify(todoCollection), () => {
     send(res, JSON.stringify(content));
   });
@@ -30,47 +30,41 @@ const createTodo = function(req, res) {
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
   todoCollection[currentUser].addTodo(todo);
-  writeAndResponse(res, todoCollection, todoCollection[currentUser]);
+  writeAndRespond(res, todoCollection, todoCollection[currentUser]);
 };
 
 const deleteTodo = function(req, res) {
   const currentUser = getCurrenUser(req);
-  const id = req.body;
-  todoCollection[currentUser].deleteTodo(id);
-  writeAndResponse(res, todoCollection, todoCollection[currentUser]);
+  const todoId = req.body;
+  todoCollection[currentUser].deleteTodo(todoId);
+  writeAndRespond(res, todoCollection, todoCollection[currentUser]);
 };
 
 const editTitle = function(req, res) {
   const currentUser = getCurrenUser(req);
-  const id = req.cookies.todo;
+  const todoId = req.cookies.todo;
   const newTitle = req.body;
-  todoCollection[currentUser].todoLists[id].editTitle(newTitle);
-  writeAndResponse(
-    res,
-    todoCollection,
-    todoCollection[currentUser].todoLists[id]
-  );
+  todoCollection[currentUser].todoLists[todoId].editTitle(newTitle);
+  const currentTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, currentTodo);
 };
 
 const editDescription = function(req, res) {
   const currentUser = getCurrenUser(req);
-  const id = req.cookies.todo;
+  const todoId = req.cookies.todo;
   const newDescription = req.body;
-  todoCollection[currentUser].todoLists[id].editDescription(newDescription);
-  writeAndResponse(
-    res,
-    todoCollection,
-    todoCollection[currentUser].todoLists[id]
-  );
+  todoCollection[currentUser].todoLists[todoId].editDescription(newDescription);
+  const currentTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, currentTodo);
 };
 
 const addTask = function(req, res) {
   const currentUser = getCurrenUser(req);
   const task = req.body;
-  const id = req.cookies.todo;
-  todoCollection[currentUser].todoLists[id].addTask(task);
-  const userTodo = todoCollection[currentUser].todoLists[id];
-  writeAndResponse(res, todoCollection, userTodo);
+  const todoId = req.cookies.todo;
+  todoCollection[currentUser].todoLists[todoId].addTask(task);
+  const userTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, userTodo);
 };
 
 const provideTodos = function(req, res) {
@@ -80,9 +74,18 @@ const provideTodos = function(req, res) {
 
 const provideCurrentTodo = function(req, res) {
   const currentUser = getCurrenUser(req);
-  const id = req.cookies.todo;
-  const todo = todoCollection[currentUser].todoLists[id];
+  const todoId = req.cookies.todo;
+  const todo = todoCollection[currentUser].todoLists[todoId];
   send(res, JSON.stringify(todo));
+};
+
+const editTask = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const todoId = req.cookies.todo;
+  const { taskId, newTask } = JSON.parse(req.body);
+  todoCollection[currentUser].todoLists[todoId].editTask(taskId, newTask);
+  const currentTodo = todoCollection[currentUser].todoLists[todoId];
+  writeAndRespond(res, todoCollection, currentTodo);
 };
 
 module.exports = {
@@ -92,5 +95,6 @@ module.exports = {
   provideCurrentTodo,
   editTitle,
   editDescription,
-  deleteTodo
+  deleteTodo,
+  editTask
 };
