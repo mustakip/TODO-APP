@@ -108,8 +108,7 @@ const toggleStatus = function(req, res) {
 
 const logoutHandler = function(req, res) {
   const expiryDate = new Date().toUTCString();
-  const cookie = `session=;expires=${expiryDate}`;
-  res.setHeader('Set-Cookie', cookie);
+  res.setHeader('Set-Cookie', `session=;expires=${expiryDate}`);
   redirectTo(res, '/');
 };
 
