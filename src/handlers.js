@@ -1,7 +1,9 @@
 const fs = require('fs');
 const { HOME_DIR, NOT_FOUND_MESSAGE } = require('./constants');
+const { redirectTo, getSessions } = require('./utils');
 const REDIRECTS = { '/': './public/index.html' };
 
+const activeSessions = getSessions();
 const logRequest = function(req, res, next) {
   console.log(req.method, req.url);
   next();
@@ -47,11 +49,25 @@ const readPostBody = function(req, res, next) {
   });
 };
 
+const isValidCookie = function(cookie) {
+  const allCookies = Object.keys(activeSessions);
+  return allCookies.includes(cookie);
+};
+
+const redirect = function(req, res) {
+  const cookie = req.cookies.session;
+  if (cookie && isValidCookie(cookie)) {
+    return redirectTo(res, '/home.html');
+  }
+  redirectTo(res, '/index.html');
+};
+
 module.exports = {
   serveFile,
   resolveRequestedRoute,
   send,
   logRequest,
   readPostBody,
-  readCookie
+  readCookie,
+  redirect
 };

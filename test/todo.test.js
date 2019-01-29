@@ -60,29 +60,6 @@ describe('Todo', () => {
       .to.be.an('Object')
       .to.not.have.property('2');
   });
-  it('should mark the task as done', () => {
-    todo.addTask('buy cake');
-    todo.markAsDone(1);
-    expect(todo)
-      .to.have.property('todoTasks')
-      .to.be.an('Object')
-      .to.have.property('1')
-      .to.be.an('Object')
-      .to.have.property('done')
-      .equals(true);
-  });
-  it('should mark the task as undone', () => {
-    todo.addTask('buy cake');
-    todo.markAsDone(1);
-    todo.markAsUndone(1);
-    expect(todo)
-      .to.have.property('todoTasks')
-      .to.be.an('Object')
-      .to.have.property('1')
-      .to.be.an('Object')
-      .to.have.property('done')
-      .equals(false);
-  });
   it('should edit the task of the given id', () => {
     todo.addTask('buy cake');
     todo.editTask(1, 'buy gift');

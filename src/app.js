@@ -6,7 +6,8 @@ const {
   serveFile,
   logRequest,
   readPostBody,
-  readCookie
+  readCookie,
+  redirect
 } = require('./handlers');
 const {
   createTodo,
@@ -24,6 +25,7 @@ const {
 app.use(logRequest);
 app.use(readPostBody);
 app.use(readCookie);
+app.get('/', redirect);
 app.post('/signup', signupHandler);
 app.post('/login', loginHandler);
 app.post('/createTodo', createTodo);

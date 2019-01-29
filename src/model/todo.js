@@ -19,14 +19,6 @@ class Todo {
     delete this.todoTasks[id];
   }
 
-  markAsDone(id) {
-    this.todoTasks[id].done = true;
-  }
-
-  markAsUndone(id) {
-    this.todoTasks[id].done = false;
-  }
-
   toggleStatus(id) {
     this.todoTasks[id].done = !this.todoTasks[id].done;
   }
