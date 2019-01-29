@@ -32,8 +32,12 @@ const readCookie = function(req, res, next) {
   const cookies = {};
   if (cookie) {
     cookie.split(';').forEach(element => {
-      const [name, value] = element.split('=');
-      cookies[name.trim()] = value.trim();
+      try {
+        const [name, value] = element.split('=');
+        cookies[name.trim()] = value.trim();
+      } catch (err) {
+        console.log(err);
+      }
     });
   }
   req.cookies = cookies;

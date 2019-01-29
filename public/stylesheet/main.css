@@ -6,7 +6,7 @@
 .button_div{
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  margin-top: 100px;
   text-align: center;
 }
 
@@ -27,9 +27,6 @@
   border: 1px solid black;
 }
 
-.create_todo_form{
-  /* margin: 25% auto; */
-}
 
 .todo_interface{
   display: flex;
@@ -88,6 +85,15 @@
 
 .task_options{
   display: flex;
+}
+
+.main_body {
+  background: white;
+  width:70%;
+  height:500px;
+  margin-left:15%;
+  margin-top:100px;
+  border:1px solid black;  
 }
 
 input{

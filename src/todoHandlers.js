@@ -2,7 +2,7 @@ const Todo = require('../src/model/todo');
 const fs = require('fs');
 const { USERS_TODO } = require('./constants');
 const { send } = require('./handlers');
-const { getUsersTodo, getSessions } = require('./utils');
+const { getUsersTodo, getSessions, redirectTo } = require('./utils');
 
 const todoCollection = getUsersTodo();
 
@@ -106,6 +106,13 @@ const toggleStatus = function(req, res) {
   writeAndRespond(res, todoCollection, currentTodo);
 };
 
+const logoutHandler = function(req, res) {
+  const expiryDate = new Date().toUTCString();
+  const cookie = `session=;expires=${expiryDate}`;
+  res.setHeader('Set-Cookie', cookie);
+  redirectTo(res, '/');
+};
+
 module.exports = {
   createTodo,
   addTask,
@@ -116,5 +123,6 @@ module.exports = {
   deleteTodo,
   editTask,
   deleteTask,
-  toggleStatus
+  toggleStatus,
+  logoutHandler
 };

@@ -19,13 +19,16 @@ const {
   editDescription,
   editTask,
   deleteTask,
-  toggleStatus
+  toggleStatus,
+  logoutHandler
 } = require('./todoHandlers');
 
 app.use(logRequest);
 app.use(readPostBody);
 app.use(readCookie);
 app.get('/', redirect);
+app.get('/todos', provideTodos);
+app.get('/getTodo', provideCurrentTodo);
 app.post('/signup', signupHandler);
 app.post('/login', loginHandler);
 app.post('/createTodo', createTodo);
@@ -36,8 +39,7 @@ app.post('/editDescription', editDescription);
 app.post('/editTask', editTask);
 app.post('/deleteTask', deleteTask);
 app.post('/toggleStatus', toggleStatus);
-app.get('/todos', provideTodos);
-app.get('/getTodo', provideCurrentTodo);
+app.post('/logout', logoutHandler);
 app.use(serveFile);
 
 module.exports = app.handleRequest.bind(app);
