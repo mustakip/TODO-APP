@@ -20,11 +20,21 @@ const fetchTodo = function(id) {
   window.location.href = '/todo.html';
 };
 
+const deleteTodo = function(id) {
+  fetch('/deleteTodo', { method: 'POST', body: id })
+    .then(res => res.json())
+    .then(todos => {
+      displayExistingTodos(todos);
+    });
+};
+
 const generateTodoView = function(id, title, description) {
-  return `<div id=${id} class="todo_div" onclick="fetchTodo(${id})">
-          <h1>${id}. ${title}</h1>
-          <h4>${description}</h4>
-          </div>`;
+  return `<div id=${id} class="todo_div" >
+           <div onclick="fetchTodo(${id})">
+            <h1>${id}. ${title}</h1>
+            <h4>${description}</h4>
+           </div>
+           <div><button type="submit" onclick="deleteTodo(${id})">Delete</button></div>`;
 };
 
 const getTitle = (todos, id) => todos.todoLists[id].title;

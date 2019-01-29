@@ -33,6 +33,13 @@ const createTodo = function(req, res) {
   writeAndResponse(res, todoCollection, todoCollection[currentUser]);
 };
 
+const deleteTodo = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const id = req.body;
+  todoCollection[currentUser].deleteTodo(id);
+  writeAndResponse(res, todoCollection, todoCollection[currentUser]);
+};
+
 const addTask = function(req, res) {
   const currentUser = getCurrenUser(req);
   const task = req.body;
@@ -58,5 +65,6 @@ module.exports = {
   createTodo,
   addTask,
   provideTodos,
-  provideCurrentTodo
+  provideCurrentTodo,
+  deleteTodo
 };

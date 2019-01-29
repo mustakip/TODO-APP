@@ -12,7 +12,8 @@ const {
   createTodo,
   addTask,
   provideTodos,
-  provideCurrentTodo
+  provideCurrentTodo,
+  deleteTodo
 } = require('./todoHandlers');
 
 app.use(logRequest);
@@ -22,6 +23,7 @@ app.post('/signup', signupHandler);
 app.post('/login', loginHandler);
 app.post('/createTodo', createTodo);
 app.post('/addTask', addTask);
+app.post('/deleteTodo', deleteTodo);
 app.get('/todos', provideTodos);
 app.get('/getTodo', provideCurrentTodo);
 app.use(serveFile);
