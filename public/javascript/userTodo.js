@@ -15,6 +15,7 @@ const getEditDescriptionDiv = document =>
   document.getElementById('edit_description');
 
 const generateTaskViewOptions = function(task, id) {
+  ``;
   const editId = `${id}edit_task`;
   return `<div class="task">
           <div id='${id}'>${task}</div><div class="task_options">
@@ -34,7 +35,7 @@ const displayEditTaskBox = function(id) {
 };
 
 const editTask = function(taskId) {
-  const newTaskId = `${id}new_task`;
+  const newTaskId = `${taskId}new_task`;
   const newTask = document.getElementById(newTaskId).value;
   fetch('/editTask', {
     method: 'POST',
