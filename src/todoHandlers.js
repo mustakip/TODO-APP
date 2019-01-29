@@ -40,6 +40,30 @@ const deleteTodo = function(req, res) {
   writeAndResponse(res, todoCollection, todoCollection[currentUser]);
 };
 
+const editTitle = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const id = req.cookies.todo;
+  const newTitle = req.body;
+  todoCollection[currentUser].todoLists[id].editTitle(newTitle);
+  writeAndResponse(
+    res,
+    todoCollection,
+    todoCollection[currentUser].todoLists[id]
+  );
+};
+
+const editDescription = function(req, res) {
+  const currentUser = getCurrenUser(req);
+  const id = req.cookies.todo;
+  const newDescription = req.body;
+  todoCollection[currentUser].todoLists[id].editDescription(newDescription);
+  writeAndResponse(
+    res,
+    todoCollection,
+    todoCollection[currentUser].todoLists[id]
+  );
+};
+
 const addTask = function(req, res) {
   const currentUser = getCurrenUser(req);
   const task = req.body;
@@ -66,5 +90,7 @@ module.exports = {
   addTask,
   provideTodos,
   provideCurrentTodo,
+  editTitle,
+  editDescription,
   deleteTodo
 };
