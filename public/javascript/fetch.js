@@ -25,7 +25,7 @@ const addTask = function() {
 };
 
 const getUserTasks = function() {
-  doFetchRequest('/getTodo', {}, displayTodo);
+  doFetchRequest('/getTodo',{}, displayNameAndTasks);
 };
 
 const editTitle = function() {
@@ -40,8 +40,15 @@ const editDescription = function() {
   doFetchRequest('/editDescription', headers, updateTodoPage);
 };
 
+const getUsernameDiv = document => document.getElementById('username');
+
+const displayUsername = function(username) {
+  const usernameDiv = getUsernameDiv(document);
+  usernameDiv.innerText = username;
+};
+
 const fetchTodoJson = function() {
-  doFetchRequest('/todos', {}, displayExistingTodos);
+  doFetchRequest('/todos', {}, displayNameAndTodos);
 };
 
 const deleteTodo = function(id) {

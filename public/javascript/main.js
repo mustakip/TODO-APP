@@ -56,6 +56,11 @@ const generateTodoView = function(id, title, description) {
   return todoDiv;
 };
 
+const displayNameAndTodos = function(content) {
+  displayExistingTodos(content.todo);
+  displayUsername(content.username);
+};
+
 window.onload = () => {
   document.getElementById('create_todo_btn').onclick = fetchTitleAndDescription;
   document.getElementById('todo_list').onclick = fetchTodoJson;

@@ -131,6 +131,11 @@ const createEditDescriptionBox = function() {
   appendChildren(editDescriptionDiv, [editDescriptionInput, addDescriptionBtn]);
 };
 
+const displayNameAndTasks = function(content) {
+  displayTodo(content.todo);
+  displayUsername(content.username);
+};
+
 window.onload = () => {
   getUserTasks();
   document.getElementById('add_task_btn').onclick = addTask;

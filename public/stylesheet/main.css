@@ -43,7 +43,6 @@
   margin:10px;
 }
 
-
 .todo_interface{
   display: flex;
   flex-direction: column;
@@ -114,6 +113,12 @@
 
 .login_form{
   display: flex;
+}
+
+.username_display{
+  font-size: 40px;
+  font-weight: bold;
+  color: black;
 }
 
 input{

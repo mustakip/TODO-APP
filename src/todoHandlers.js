@@ -2,7 +2,7 @@ const Todo = require('../src/model/todo');
 const fs = require('fs');
 const { USERS_TODOS_PATH, SESSIONS_PATH, UTF8 } = require('./constants');
 const { send } = require('./handlers');
-const { getUsersTodo, getSessions, redirectTo } = require('./utils');
+const { getUsersTodo, getSessions, redirectTo, getUsers } = require('./utils');
 
 const todoCollection = getUsersTodo();
 
@@ -68,15 +68,20 @@ const addTask = function(req, res) {
 };
 
 const provideTodos = function(req, res) {
+  const users = getUsers();
   const currentUser = getCurrentUser(req);
-  send(res, JSON.stringify(todoCollection[currentUser]));
+  const username = users[currentUser].name;
+  const todo = todoCollection[currentUser];
+  send(res, JSON.stringify({ username, todo }));
 };
 
 const provideCurrentTodo = function(req, res) {
+  const users = getUsers();
   const currentUser = getCurrentUser(req);
+  const username = users[currentUser].name;
   const todoId = req.cookies.todo;
   const todo = todoCollection[currentUser].todoLists[todoId];
-  send(res, JSON.stringify(todo));
+  send(res, JSON.stringify({ username, todo }));
 };
 
 const editTask = function(req, res) {

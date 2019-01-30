@@ -1,10 +1,5 @@
 const fs = require('fs');
-const {
-  createKeyValue,
-  redirectTo,
-  getUsers,
-  getUsersTodo
-} = require('./utils');
+const { createKeyValue, redirectTo, getUsers, getUsersTodo } = require('./utils');
 const { UTF8, USER_JSON_PATH, USERS_TODOS_PATH } = require('./constants');
 const TodoList = require('./model/todoList');
 
@@ -31,8 +26,7 @@ const createNewUser = function(res, userDetails) {
 
 const signupHandler = function(req, res) {
   const userDetails = createKeyValue(req.body);
-  if (doesUserExists(userDetails.userid))
-    return redirectTo(res, '/signup.html');
+  if (doesUserExists(userDetails.userid)) return redirectTo(res, '/signup.html');
   createNewUser(res, userDetails);
 };
 
