@@ -1,6 +1,6 @@
 const Express = require('./express');
-const { loginHandler } = require('./login.js');
-const { signupHandler } = require('./createUser');
+const { loginHandler } = require('./login');
+const { signupHandler } = require('./signup');
 const app = new Express();
 const {
   serveFile,
