@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { SESSIONS_JSON, UTF8, HOME_PAGE, LOGIN_PAGE } = require('./constants');
+const { SESSIONS_PATH, UTF8, HOME_PAGE, LOGIN_PAGE } = require('./constants');
 const {
   getUsers,
   createKeyValue,
@@ -12,7 +12,7 @@ const activeSessions = getSessions();
 
 const addSession = function(userid, cookie) {
   activeSessions[cookie] = userid;
-  fs.writeFileSync(SESSIONS_JSON, JSON.stringify(activeSessions), UTF8);
+  fs.writeFileSync(SESSIONS_PATH, JSON.stringify(activeSessions), UTF8);
 };
 
 const isValidUser = function(userid, password) {

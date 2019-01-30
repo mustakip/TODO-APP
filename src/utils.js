@@ -1,5 +1,10 @@
 const fs = require('fs');
-const { USERS_TODO, USER_JSON, UTF8, SESSIONS_JSON } = require('./constants');
+const {
+  USERS_TODOS_PATH,
+  USER_JSON_PATH,
+  UTF8,
+  SESSIONS_PATH
+} = require('./constants');
 const TodoList = require('./model/todoList');
 const Todo = require('./model/todo');
 
@@ -12,12 +17,12 @@ const createKeyValue = function(text) {
 };
 
 const getSessions = function() {
-  const sessions = fs.readFileSync(SESSIONS_JSON, UTF8);
+  const sessions = fs.readFileSync(SESSIONS_PATH, UTF8);
   return JSON.parse(sessions);
 };
 
 const getUsers = function() {
-  const users = fs.readFileSync(USER_JSON, UTF8);
+  const users = fs.readFileSync(USER_JSON_PATH, UTF8);
   return JSON.parse(users);
 };
 
@@ -38,7 +43,7 @@ const retainTodoListMethods = function(userIds, usersTodo) {
 };
 
 const getUsersTodo = function() {
-  const usersTodo = JSON.parse(fs.readFileSync(USERS_TODO, UTF8));
+  const usersTodo = JSON.parse(fs.readFileSync(USERS_TODOS_PATH, UTF8));
   const userIds = Object.keys(usersTodo);
   return retainTodoListMethods(userIds, usersTodo);
 };

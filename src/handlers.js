@@ -1,5 +1,10 @@
 const fs = require('fs');
-const { HOME_DIR, NOT_FOUND_MESSAGE } = require('./constants');
+const {
+  HOME_DIR,
+  NOT_FOUND_MESSAGE,
+  HOME_PAGE,
+  INDEX_PAGE
+} = require('./constants');
 const { redirectTo, getSessions } = require('./utils');
 const REDIRECTS = { '/': './public/index.html' };
 
@@ -56,10 +61,10 @@ const isValidCookie = function(cookie) {
 
 const redirect = function(req, res) {
   const cookie = req.cookies.session;
-  if (cookie && isValidCookie(cookie)) {
-    return redirectTo(res, '/home.html');
+  if (isValidCookie(cookie)) {
+    return redirectTo(res, HOME_PAGE);
   }
-  redirectTo(res, '/index.html');
+  redirectTo(res, INDEX_PAGE);
 };
 
 module.exports = {

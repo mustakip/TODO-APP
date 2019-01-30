@@ -5,7 +5,7 @@ const {
   getUsers,
   getUsersTodo
 } = require('./utils');
-const { UTF8, USER_JSON, USERS_TODO } = require('./constants');
+const { UTF8, USER_JSON_PATH, USERS_TODOS_PATH } = require('./constants');
 const TodoList = require('./model/todoList');
 
 const users = getUsers();
@@ -17,8 +17,8 @@ const doesUserExists = function(userid) {
 };
 
 const writeUserDetails = function(users, usersTodo) {
-  fs.writeFileSync(USER_JSON, JSON.stringify(users), UTF8);
-  fs.writeFileSync(USERS_TODO, JSON.stringify(usersTodo), UTF8);
+  fs.writeFileSync(USER_JSON_PATH, JSON.stringify(users), UTF8);
+  fs.writeFileSync(USERS_TODOS_PATH, JSON.stringify(usersTodo), UTF8);
 };
 
 const createNewUser = function(res, userDetails) {

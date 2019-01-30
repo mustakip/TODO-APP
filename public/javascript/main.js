@@ -59,5 +59,6 @@ const fetchTodoJson = function() {
 
 window.onload = () => {
   document.getElementById('create_todo_btn').onclick = fetchTitleAndDescription;
-  document.getElementById('todo_list').onclick = fetchTodoJson();
+  document.getElementById('todo_list').onclick = fetchTodoJson;
+  fetchTodoJson();
 };
