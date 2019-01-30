@@ -1,8 +1,10 @@
 const getTodoDiv = document => document.getElementById('todo_list');
 const getTask = document => document.getElementById('task').value;
 const createElement = element => document.createElement(element);
+const EMPTY = '';
+const DELETE_UNICODE = '&#x274C';
 
-const fetchTodo = function(id) {
+const renderTodoPage = function(id) {
   document.cookie = 'todo=' + id;
   window.location.href = '/todo.html';
 };
@@ -10,21 +12,48 @@ const fetchTodo = function(id) {
 const getTitle = (todos, id) => todos.todoLists[id].title;
 const getDescription = (todos, id) => todos.todoLists[id].description;
 
+const assignTodoAttributes = function(todos, id) {
+  const title = getTitle(todos, id);
+  const description = getDescription(todos, id);
+  const todoDetailsDiv = generateTodoView(id, title, description);
+  return todoDetailsDiv;
+};
+
 const displayExistingTodos = function(todos) {
-  const todoHTML = Object.keys(todos.todoLists).map(id =>
-    generateTodoView(id, getTitle(todos, id), getDescription(todos, id))
-  );
   const todoDiv = getTodoDiv(document);
-  todoDiv.innerHTML = todoHTML.join('');
+  const todoHTML = Object.keys(todos.todoLists).map(id =>
+    assignTodoAttributes(todos, id)
+  );
+  appendChildren(todoDiv, todoHTML);
+};
+
+const createDeleteButton = function(id) {
+  const deleteBtnDiv = createDiv(EMPTY, EMPTY, EMPTY);
+  const deleteBtn = createButton(EMPTY, DELETE_UNICODE, deleteTodo.bind(null, id));
+  deleteBtn.type = 'submit';
+
+  appendChildren(deleteBtnDiv, [deleteBtn]);
+  return deleteBtnDiv;
+};
+
+const createTitlteDescriptionDiv = function(id, title, description) {
+  const titleDescriptionDiv = createDiv(EMPTY, EMPTY, EMPTY);
+  titleDescriptionDiv.onclick = renderTodoPage.bind(null, id);
+
+  const titleHeading = createHeading('h1', title);
+  const descriptionHeading = createHeading('h3', description);
+
+  appendChildren(titleDescriptionDiv, [titleHeading, descriptionHeading]);
+  return titleDescriptionDiv;
 };
 
 const generateTodoView = function(id, title, description) {
-  return `<div id=${id} class="todo_div" >
-           <div onclick="fetchTodo(${id})">
-            <h1>${title}</h1>
-            <h3>${description}</h3>
-           </div>
-           <div><button type="submit" onclick="deleteTodo(${id})">&#x274C;</button></div></div>`;
+  const todoDiv = createDiv('todo_div', id, EMPTY);
+  const deleteButton = createDeleteButton(id);
+  const titleDescriptionDiv = createTitlteDescriptionDiv(id, title, description);
+
+  appendChildren(todoDiv, [titleDescriptionDiv, deleteButton]);
+  return todoDiv;
 };
 
 window.onload = () => {

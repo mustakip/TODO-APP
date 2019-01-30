@@ -28,3 +28,9 @@ const appendChildren = function(parent, children) {
     parent.appendChild(child);
   });
 };
+
+const createHeading = function(level, value) {
+  const heading = document.createElement(level);
+  heading.innerHTML = value;
+  return heading;
+};
