@@ -1,8 +1,8 @@
-const createInputField = function(type, name, value) {
+const createInputField = function(type, id, value) {
   const inputField = document.createElement('input');
   inputField.type = type;
   inputField.value = value;
-  inputField.name = name;
+  inputField.id = id;
   return inputField;
 };
 
@@ -23,6 +23,7 @@ const createButton = function(id, value, onclickEvent) {
 };
 
 const appendChildren = function(parent, children) {
+  parent.innerHTML = '';
   children.forEach(child => {
     parent.appendChild(child);
   });

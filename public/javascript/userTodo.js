@@ -78,25 +78,47 @@ const displayTodo = function(todo) {
 };
 
 const updateTodoPage = function(todo) {
-  const editTitleBtn = `<button id="edit_title_btn" onclick="createEditTitleBox()">&#x270D</button>`;
-  const editDescriptionBtn = `<button id="edit_description_btn" onclick="createEditDescriptionBox()">&#x270D</button>`;
-  getEditTitleDiv(document).innerHTML = editTitleBtn;
-  getEditDescriptionDiv(document).innerHTML = editDescriptionBtn;
+  const editTitleBtn = createButton(
+    'edit_title_btn',
+    '&#x270D',
+    createEditTitleBox
+  );
+  const editDescriptionBtn = createButton(
+    'edit_description_btn',
+    '&#x270D',
+    createEditDescriptionBox
+  );
+  const editTitleBtnDiv = getEditTitleDiv(document);
+  const editDescriptionBtnDiv = getEditDescriptionDiv(document);
+  appendChildren(editTitleBtnDiv, [editTitleBtn]);
+  appendChildren(editDescriptionBtnDiv, [editDescriptionBtn]);
+
   displayTodo(todo);
 };
 
 const createEditTitleBox = function() {
   const title = getTodoTitle(document);
-  const editTitleBox = `<input type="text" id="new_title" value="${title}"/>
-                        <button id ="add_title" onclick="editTitle()">Edit Title</button>`;
-  document.getElementById('edit_title').innerHTML = editTitleBox;
+  const editTitleInput = createInputField('text', 'new_title', title);
+  const editTitleBtn = createButton('add_title', 'Edit Title', editTitle);
+  const editTitleBox = [editTitleInput, editTitleBtn];
+  const editTitleDiv = document.getElementById('edit_title');
+  appendChildren(editTitleDiv, editTitleBox);
 };
 
 const createEditDescriptionBox = function() {
   const description = getTodoDescription(document);
-  const editDescriptionBox = `<input type="text" id="new_description" value="${description}"/>
-                              <button id ="add_description" onclick="editDescription()">Edit Description</button>`;
-  document.getElementById('edit_description').innerHTML = editDescriptionBox;
+  const editDescriptionInput = createInputField(
+    'text',
+    'new_description',
+    description
+  );
+  const addDescriptionBtn = createButton(
+    'add_description',
+    'Edit Description',
+    editDescription
+  );
+  const editDescriptionDiv = document.getElementById('edit_description');
+  appendChildren(editDescriptionDiv, [editDescriptionInput, addDescriptionBtn]);
 };
 
 window.onload = () => {
