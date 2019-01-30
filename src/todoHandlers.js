@@ -4,8 +4,6 @@ const { USERS_TODOS_PATH, SESSIONS_PATH, UTF8 } = require('./constants');
 const { send } = require('./handlers');
 const { getUsersTodo, getSessions, redirectTo, getUsers } = require('./utils');
 
-const todoCollection = getUsersTodo();
-
 const initialiseTodo = function(requestBody) {
   const todoDetails = JSON.parse(requestBody);
   todoDetails.id = 0;
@@ -13,113 +11,111 @@ const initialiseTodo = function(requestBody) {
   return todoDetails;
 };
 
-const writeAndRespond = function(res, todoCollection, content) {
-  fs.writeFile(USERS_TODOS_PATH, JSON.stringify(todoCollection), () => {
+const writeAndRespond = function(res, usersTodo, content) {
+  fs.writeFile(USERS_TODOS_PATH, JSON.stringify(usersTodo), () => {
     send(res, JSON.stringify(content));
   });
 };
 
-const getCurrentUser = function(req) {
-  const activeSessions = getSessions();
+const getCurrentUser = function(cache, req) {
   const sessionId = req.cookies.session;
-  return activeSessions[sessionId];
+  return cache.sessions[sessionId];
 };
 
-const createTodo = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const createTodo = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
-  todoCollection[currentUser].addTodo(todo);
-  writeAndRespond(res, todoCollection, todoCollection[currentUser]);
+  cache.usersTodo[currentUser].addTodo(todo);
+  writeAndRespond(res, cache.usersTodo, cache.usersTodo[currentUser]);
 };
 
-const deleteTodo = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const deleteTodo = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.body;
-  todoCollection[currentUser].deleteTodo(todoId);
-  writeAndRespond(res, todoCollection, todoCollection[currentUser]);
+  cache.usersTodo[currentUser].deleteTodo(todoId);
+  writeAndRespond(res, cache.usersTodo, cache.usersTodo[currentUser]);
 };
 
-const editTitle = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const editTitle = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const newTitle = req.body;
-  todoCollection[currentUser].todoLists[todoId].editTitle(newTitle);
-  const currentTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, currentTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].editTitle(newTitle);
+  const currentTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const editDescription = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const editDescription = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const newDescription = req.body;
-  todoCollection[currentUser].todoLists[todoId].editDescription(newDescription);
-  const currentTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, currentTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].editDescription(newDescription);
+  const currentTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const addTask = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const addTask = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const task = req.body;
-  todoCollection[currentUser].todoLists[todoId].addTask(task);
-  const userTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, userTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].addTask(task);
+  const userTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, userTodo);
 };
 
-const provideTodos = function(req, res) {
-  const users = getUsers();
-  const currentUser = getCurrentUser(req);
+const provideTodos = function(cache, req, res) {
+  const users = cache.users;
+  const currentUser = getCurrentUser(cache, req);
   const username = users[currentUser].name;
-  const todo = todoCollection[currentUser];
+  const todo = cache.usersTodo[currentUser];
   send(res, JSON.stringify({ username, todo }));
 };
 
-const provideCurrentTodo = function(req, res) {
-  const users = getUsers();
-  const currentUser = getCurrentUser(req);
+const provideCurrentTodo = function(cache, req, res) {
+  const users = cache.users;
+  const currentUser = getCurrentUser(cache, req);
   const username = users[currentUser].name;
   const todoId = req.cookies.todo;
-  const todo = todoCollection[currentUser].todoLists[todoId];
+  const todo = cache.usersTodo[currentUser].todoLists[todoId];
   send(res, JSON.stringify({ username, todo }));
 };
 
-const editTask = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const editTask = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const { taskId, newTask } = JSON.parse(req.body);
-  todoCollection[currentUser].todoLists[todoId].editTask(taskId, newTask);
-  const currentTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, currentTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].editTask(taskId, newTask);
+  const currentTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const deleteTask = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const deleteTask = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const taskId = req.body;
-  todoCollection[currentUser].todoLists[todoId].deleteTask(taskId);
-  const currentTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, currentTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].deleteTask(taskId);
+  const currentTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const toggleStatus = function(req, res) {
-  const currentUser = getCurrentUser(req);
+const toggleStatus = function(cache, req, res) {
+  const currentUser = getCurrentUser(cache, req);
   const todoId = req.cookies.todo;
   const taskId = req.body;
-  todoCollection[currentUser].todoLists[todoId].toggleStatus(taskId);
-  const currentTodo = todoCollection[currentUser].todoLists[todoId];
-  writeAndRespond(res, todoCollection, currentTodo);
+  cache.usersTodo[currentUser].todoLists[todoId].toggleStatus(taskId);
+  const currentTodo = cache.usersTodo[currentUser].todoLists[todoId];
+  writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const deleteSession = function(req) {
-  const activeSessions = getSessions();
+const deleteSession = function(cache, req) {
   const sessionId = req.cookies.session;
-  delete activeSessions[sessionId];
-  fs.writeFile(SESSIONS_PATH, JSON.stringify(activeSessions), UTF8, () => {});
+  delete cache.sessions[sessionId];
+  fs.writeFile(SESSIONS_PATH, JSON.stringify(cache.sessions), UTF8, () => {});
 };
 
-const logoutHandler = function(req, res) {
-  deleteSession(req);
+const logoutHandler = function(cache, req, res) {
+  deleteSession(cache, req);
   const expiryDate = new Date().toUTCString();
   res.setHeader('Set-Cookie', `session=;expires=${expiryDate}`);
   redirectTo(res, '/');

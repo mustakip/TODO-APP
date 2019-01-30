@@ -1,6 +1,7 @@
 const Express = require('./express');
 const { loginHandler } = require('./login');
 const { signupHandler } = require('./signup');
+const { initialiseCache } = require('./utils');
 const app = new Express();
 const {
   serveFile,
@@ -23,23 +24,25 @@ const {
   logoutHandler
 } = require('./todoHandlers');
 
+const cache = initialiseCache();
+
 app.use(logRequest);
 app.use(readPostBody);
 app.use(readCookie);
-app.get('/', redirect);
-app.get('/todos', provideTodos);
-app.get('/getTodo', provideCurrentTodo);
-app.post('/signup', signupHandler);
-app.post('/login', loginHandler);
-app.post('/createTodo', createTodo);
-app.post('/addTask', addTask);
-app.post('/deleteTodo', deleteTodo);
-app.post('/editTitle', editTitle);
-app.post('/editDescription', editDescription);
-app.post('/editTask', editTask);
-app.post('/deleteTask', deleteTask);
-app.post('/toggleStatus', toggleStatus);
-app.post('/logout', logoutHandler);
+app.get('/', redirect.bind(null, cache));
+app.get('/todos', provideTodos.bind(null, cache));
+app.get('/getTodo', provideCurrentTodo.bind(null, cache));
+app.post('/signup', signupHandler.bind(null, cache));
+app.post('/login', loginHandler.bind(null, cache));
+app.post('/createTodo', createTodo.bind(null, cache));
+app.post('/addTask', addTask.bind(null, cache));
+app.post('/deleteTodo', deleteTodo.bind(null, cache));
+app.post('/editTitle', editTitle.bind(null, cache));
+app.post('/editDescription', editDescription.bind(null, cache));
+app.post('/editTask', editTask.bind(null, cache));
+app.post('/deleteTask', deleteTask.bind(null, cache));
+app.post('/toggleStatus', toggleStatus.bind(null, cache));
+app.post('/logout', logoutHandler.bind(null, cache));
 app.use(serveFile);
 
 module.exports = app.handleRequest.bind(app);

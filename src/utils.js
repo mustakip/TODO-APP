@@ -54,10 +54,18 @@ const redirectTo = function(res, location) {
   res.end();
 };
 
+const initialiseCache = function() {
+  const usersTodo = getUsersTodo();
+  const users = getUsers();
+  const sessions = getSessions();
+  return { usersTodo, users, sessions };
+};
+
 module.exports = {
   createKeyValue,
   redirectTo,
   getUsers,
   getUsersTodo,
-  getSessions
+  getSessions,
+  initialiseCache
 };

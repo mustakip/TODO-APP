@@ -8,7 +8,6 @@ const {
 const { redirectTo, getSessions } = require('./utils');
 const REDIRECTS = { '/': './public/index.html' };
 
-const activeSessions = getSessions();
 const logRequest = function(req, res, next) {
   console.log(req.method, req.url);
   next();
@@ -54,14 +53,14 @@ const readPostBody = function(req, res, next) {
   });
 };
 
-const isValidCookie = function(cookie) {
-  const allCookies = Object.keys(activeSessions);
+const isValidCookie = function(cache, cookie) {
+  const allCookies = Object.keys(cache.sessions);
   return allCookies.includes(cookie);
 };
 
-const redirect = function(req, res) {
+const redirect = function(cache, req, res) {
   const cookie = req.cookies.session;
-  if (isValidCookie(cookie)) {
+  if (isValidCookie(cache, cookie)) {
     return redirectTo(res, HOME_PAGE);
   }
   redirectTo(res, INDEX_PAGE);
