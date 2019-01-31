@@ -1,7 +1,7 @@
 const Express = require('./express');
 const { loginHandler } = require('./login');
 const { signupHandler } = require('./signup');
-const { initialiseCache } = require('./utils');
+const { initialiseCache } = require('./cache');
 const app = new Express();
 const {
   serveFile,

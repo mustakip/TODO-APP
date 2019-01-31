@@ -2,7 +2,7 @@ const Todo = require('../src/model/todo');
 const fs = require('fs');
 const { USERS_TODOS_PATH, SESSIONS_PATH, UTF8 } = require('./constants');
 const { send } = require('./handlers');
-const { getUsersTodo, getSessions, redirectTo, getUsers } = require('./utils');
+const { redirectTo } = require('./utils');
 
 const initialiseTodo = function(requestBody) {
   const todoDetails = JSON.parse(requestBody);
