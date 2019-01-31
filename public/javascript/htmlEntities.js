@@ -34,3 +34,11 @@ const createHeading = function(level, value) {
   heading.innerHTML = value;
   return heading;
 };
+
+const createImage = function(src, width, height) {
+  const image = document.createElement('img');
+  image.src = src;
+  image.style.width = width + 'px';
+  image.style.height = height + 'px';
+  return image;
+};

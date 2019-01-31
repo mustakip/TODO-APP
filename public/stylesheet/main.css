@@ -1,19 +1,20 @@
 .header{
+  padding-left: 20px;
+  padding-right: 20px;
   display: flex;
   justify-content: space-between;
-  text-align: center;
-  border-bottom: 1px solid black;
+  align-items: baseline;
+  background: #4a4e4d;
 }
 
-.button_div{
-  height: 500px;
-  width: 700px;
+ .button_div{
   display: flex;
   flex-direction: column;
   margin:100px auto;
   text-align: center;
-  border: 1px solid black;
-}
+  justify-content: center;
+  align-items: center;  
+} 
 
 .welcome_page{
   display: flex;
@@ -23,9 +24,9 @@
 }
 
 
-.login_form{
+/* .login_form{
   margin: 150px auto;
-}
+}  */
 
 .buttons{
   margin: 5px;
@@ -47,15 +48,20 @@
   display: flex;
   flex-direction: column;
   width: 80%;
+  margin-top:2px;
   margin-left: 10%;
 }
 
-.todo_div {
+.todo_div, .task, .login_form {
   display: flex;
   justify-content: space-between;
-  border:1px solid black;
+  align-items: center;
+  border-radius: 8px;
+  box-shadow: 3px 3px lightslategray;
   padding: 20px;
-  margin: 2px;
+  margin: 8px 4px;
+  color: #4a4e4d;
+  background:#f6cd61;
 }
 
 .todo_item{
@@ -74,13 +80,13 @@
 }
 
 .todo_title{  
-  padding: 10px;
+  padding: 2px;
   border-bottom: 1px solid black;
-  font-size: 50px;
+  font-size: 40px;
 }
 
 .todo_description{
-  padding: 10px;
+  padding: 2px;
   border-bottom: 1px solid black;
   font-size: 25px;
 }
@@ -88,14 +94,7 @@
 .todo_tasks{
   padding: 15px;
   text-align: left;
-  font-size: 30px;
-}
-
-.task {
-  justify-content: space-between;
-  display:flex;
-  padding: 5px;
-  border-bottom: 1px solid black;
+  font-size: 18px;
 }
 
 .task_options{
@@ -118,7 +117,7 @@
 .username_display{
   font-size: 40px;
   font-weight: bold;
-  color: black;
+  color: whitesmoke;
 }
 
 input{
@@ -129,16 +128,46 @@ input{
 }
 
 button{
-  border-radius: 5px;
   margin:5px;
-  padding: 5px;
+  padding: 2px;
   width: 100px;
   height: 35px;
+  font-size: 13px;
+  border-radius: 3px;
 }
+
+button:hover{
+  cursor: pointer;
+  background: #f6cd61;
+}
+
 a{
   text-decoration: none;
 }
 
+.app_title{
+  color: #f6cd61
+}
+
+.app_title:hover{
+  color: #fe8a71;
+}
+
+.img_btn:hover{
+  cursor: pointer;
+}
+
 h1{
   margin: 0px;
+}
+
+body{
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: #0e9aa7;
+}
+
+.list_info:hover{
+  cursor: pointer;
+  color: #009688;
 }

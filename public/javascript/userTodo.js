@@ -24,8 +24,8 @@ const DONE_UNICODE = '&#x2705;';
 const UNDONE_UNICODE = '&#x2611;&#xFE0F;';
 
 const status = {
-  true: DONE_UNICODE,
-  false: UNDONE_UNICODE
+  true: '/images/item_done.png',
+  false: '/images/item_not_done.png'
 };
 
 const getTaskIds = function(id) {
@@ -47,9 +47,25 @@ const generateTaskViewOptions = function(task, id, status) {
   const deleteTaskEvent = deleteTask.bind(null, id);
   const toggleTaskEvent = toggleStatus.bind(null, id);
 
-  const editTaskButton = createButton(editId, EDIT_UNICODE, editTaskEvent);
-  const deleteTaskButton = createButton(deleteId, DELETE_UNICODE, deleteTaskEvent);
-  const toggleTaskButton = createButton(toggleId, status, toggleTaskEvent);
+  const editTaskButton = createImage('/images/edit.png', 36, 36);
+  editTaskButton.onclick = editTaskEvent;
+  editTaskButton.id = editId;
+  editTaskButton.onmouseover = () => (event.target.src = '/images/edit_hover.png');
+  editTaskButton.onmouseout = () => (event.target.src = '/images/edit.png');
+  editTaskButton.className = 'img_btn';
+
+  const deleteTaskButton = createImage('/images/delete.png', 36, 36);
+  deleteTaskButton.onclick = deleteTaskEvent;
+  deleteTaskButton.id = deleteId;
+  deleteTaskButton.onmouseover = () => (event.target.src = '/images/delete_hover.png');
+  deleteTaskButton.onmouseout = () => (event.target.src = '/images/delete.png');
+  deleteTaskButton.className = 'img_btn';
+
+  const toggleTaskButton = createImage(status, 36, 36);
+  toggleTaskButton.id = toggleId;
+  toggleTaskButton.onclick = toggleTaskEvent;
+  toggleTaskButton.className = 'img_btn';
+
   const optionButtons = [editTaskButton, deleteTaskButton, toggleTaskButton];
 
   appendChildren(taskOptionsContainer, optionButtons);

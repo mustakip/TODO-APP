@@ -28,16 +28,17 @@ const displayExistingTodos = function(todos) {
 };
 
 const createDeleteButton = function(id) {
-  const deleteBtnDiv = createDiv(EMPTY, EMPTY, EMPTY);
-  const deleteBtn = createButton(EMPTY, DELETE_UNICODE, deleteTodo.bind(null, id));
-  deleteBtn.type = 'submit';
+  const deleteBtn = createImage('/images/delete.png', 48, 48);
+  deleteBtn.onclick = deleteTodo.bind(null, id);
+  deleteBtn.onmouseover = () => (event.target.src = '/images/delete_hover.png');
+  deleteBtn.onmouseout = () => (event.target.src = '/images/delete.png');
+  deleteBtn.className = 'img_btn';
 
-  appendChildren(deleteBtnDiv, [deleteBtn]);
-  return deleteBtnDiv;
+  return deleteBtn;
 };
 
 const createTitlteDescriptionDiv = function(id, title, description) {
-  const titleDescriptionDiv = createDiv(EMPTY, EMPTY, EMPTY);
+  const titleDescriptionDiv = createDiv('list_info', EMPTY, EMPTY);
   titleDescriptionDiv.onclick = renderTodoPage.bind(null, id);
 
   const titleHeading = createHeading('h1', title);
