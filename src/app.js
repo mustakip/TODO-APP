@@ -21,7 +21,8 @@ const {
   editTask,
   deleteTask,
   toggleStatus,
-  logoutHandler
+  logoutHandler,
+  renderTodo
 } = require('./todoHandlers');
 
 const cache = initialiseCache();
@@ -34,6 +35,7 @@ app.get('/todos', provideTodos.bind(null, cache));
 app.get('/getTodo', provideCurrentTodo.bind(null, cache));
 app.post('/signup', signupHandler.bind(null, cache));
 app.post('/login', loginHandler.bind(null, cache));
+app.post('/renderTodo', renderTodo.bind(null, cache));
 app.post('/createTodo', createTodo.bind(null, cache));
 app.post('/addTask', addTask.bind(null, cache));
 app.post('/deleteTodo', deleteTodo.bind(null, cache));

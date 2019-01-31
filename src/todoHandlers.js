@@ -114,6 +114,12 @@ const deleteSession = function(cache, req) {
   fs.writeFile(SESSIONS_PATH, JSON.stringify(cache.sessions), UTF8, () => {});
 };
 
+const renderTodo = function(cache, req, res) {
+  const todoId = req.body;
+  res.setHeader('Set-Cookie', `todo=${todoId}`);
+  res.end();
+};
+
 const logoutHandler = function(cache, req, res) {
   deleteSession(cache, req);
   const expiryDate = new Date().toUTCString();
@@ -132,5 +138,6 @@ module.exports = {
   editTask,
   deleteTask,
   toggleStatus,
-  logoutHandler
+  logoutHandler,
+  renderTodo
 };

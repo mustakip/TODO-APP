@@ -5,7 +5,10 @@ const EMPTY = '';
 const DELETE_UNICODE = '&#x274C';
 
 const renderTodoPage = function(id) {
-  document.cookie = 'todo=' + id;
+  fetch('/renderTodo', {
+    method: 'POST',
+    body: id
+  });
   window.location.href = '/todo.html';
 };
 

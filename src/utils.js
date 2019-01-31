@@ -1,3 +1,6 @@
+const REDIRECTS = { '/': './public/index.html' };
+const { HOME_DIR } = require('./constants');
+
 const createKeyValue = function(text) {
   const keyValuePair = new Object();
   const splittedText = text.split('&').map(pair => pair.split('='));
@@ -12,7 +15,25 @@ const redirectTo = function(res, location) {
   res.end();
 };
 
+const send = function(res, content, statusCode = 200) {
+  res.statusCode = statusCode;
+  res.write(content);
+  res.end();
+};
+
+const resolveRequestedRoute = function(url) {
+  return REDIRECTS[url] || HOME_DIR + url;
+};
+
+const isValidCookie = function(cache, cookie) {
+  const allCookies = Object.keys(cache.sessions);
+  return allCookies.includes(cookie);
+};
+
 module.exports = {
   createKeyValue,
-  redirectTo
+  redirectTo,
+  send,
+  resolveRequestedRoute,
+  isValidCookie
 };

@@ -1,27 +1,22 @@
 const fs = require('fs');
 const {
-  HOME_DIR,
   NOT_FOUND_MESSAGE,
   HOME_PAGE,
   INDEX_PAGE
 } = require('./constants');
-const { redirectTo, getSessions } = require('./utils');
-const REDIRECTS = { '/': './public/index.html' };
+const {
+  redirectTo,
+  send,
+  isValidCookie,
+  resolveRequestedRoute
+} = require('./utils');
 
 const logRequest = function(req, res, next) {
   console.log(req.method, req.url);
   next();
 };
 
-const send = function(res, content, statusCode = 200) {
-  res.statusCode = statusCode;
-  res.write(content);
-  res.end();
-};
 
-const resolveRequestedRoute = function(url) {
-  return REDIRECTS[url] || HOME_DIR + url;
-};
 
 const serveFile = function(req, res) {
   const requestedRoute = resolveRequestedRoute(req.url);
@@ -53,10 +48,6 @@ const readPostBody = function(req, res, next) {
   });
 };
 
-const isValidCookie = function(cache, cookie) {
-  const allCookies = Object.keys(cache.sessions);
-  return allCookies.includes(cookie);
-};
 
 const redirect = function(cache, req, res) {
   const cookie = req.cookies.session;
