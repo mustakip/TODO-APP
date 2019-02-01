@@ -21,9 +21,11 @@
     <div class="todo_interface">
       <div class="create_todo">
         <div class="create_todo_form">
-          <input type="text" id="title" placeholder="title" name="title"/>
-          <input type="text" id="description" placeholder="description" name="description"/>
+          <form action="/createTodo" method='POST'>
+          <input type="text" id="title" placeholder="title" name="title" required/>
+          <input type="text" id="description" placeholder="description" name="description" required/>
           <button type="submit" id = "create_todo_btn">Create Todo</button>
+          </form>
         </div>
       </div>
 

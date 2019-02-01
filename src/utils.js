@@ -1,5 +1,5 @@
 const REDIRECTS = { '/': './public/index.html' };
-const { HOME_DIR } = require('./constants');
+const { HOME_DIR, MIME_TEXT_PLAIN, MIME_TYPES } = require('./constants');
 
 const decodeURI = value => unescape(value).replace(/\+/g, ' ');
 
@@ -17,8 +17,8 @@ const redirectTo = function(res, location) {
   res.end();
 };
 
-const send = function(res, content, statusCode = 200) {
-  res.statusCode = statusCode;
+const send = function(res, content, contentType, statusCode = 200) {
+  res.writeHead(statusCode, { 'Content-Type': contentType });
   res.write(content);
   res.end();
 };
@@ -32,10 +32,20 @@ const isValidCookie = function(cache, cookie) {
   return allCookies.includes(cookie);
 };
 
+const resolveMIMEType = function(fileExtension) {
+  return MIME_TYPES[fileExtension] || MIME_TEXT_PLAIN;
+};
+
+const getFileExtension = function(filename) {
+  return filename.split('.').pop();
+};
+
 module.exports = {
   createKeyValue,
   redirectTo,
   send,
   resolveRequestedRoute,
-  isValidCookie
+  isValidCookie,
+  resolveMIMEType,
+  getFileExtension
 };

@@ -4,7 +4,9 @@ const {
   redirectTo,
   send,
   isValidCookie,
-  resolveRequestedRoute
+  resolveRequestedRoute,
+  resolveMIMEType,
+  getFileExtension
 } = require('./utils');
 
 const restrictedURLsWhenLoggedIn = [
@@ -42,9 +44,10 @@ const logRequest = function(req, res, next) {
 
 const serveFile = function(req, res) {
   const requestedRoute = resolveRequestedRoute(req.url);
+  const fileExtension = getFileExtension(requestedRoute);
   fs.readFile(requestedRoute, (error, content) => {
-    if (error) return send(res, NOT_FOUND_MESSAGE, 404);
-    send(res, content);
+    if (error) return send(res, NOT_FOUND_MESSAGE, resolveMIMEType(), 404);
+    send(res, content, resolveMIMEType(fileExtension));
   });
 };
 

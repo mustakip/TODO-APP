@@ -66,7 +66,6 @@ const displayNameAndTodos = function(content) {
 };
 
 window.onload = () => {
-  document.getElementById('create_todo_btn').onclick = fetchTitleAndDescription;
   document.getElementById('todo_list').onclick = fetchTodoJson;
   fetchTodoJson();
 };

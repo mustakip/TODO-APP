@@ -56,16 +56,6 @@ const deleteTodo = function(id) {
   doFetchRequest('/deleteTodo', headers, displayExistingTodos);
 };
 
-const fetchTitleAndDescription = function() {
-  const title = document.getElementById('title').value;
-  const description = document.getElementById('description').value;
-  const headers = {
-    method: 'POST',
-    body: JSON.stringify({ title, description })
-  };
-  doFetchRequest('/createTodo', headers, displayExistingTodos);
-};
-
 const doFetchRequest = function(url, headers, callback) {
   fetch(url, headers)
     .then(res => {
