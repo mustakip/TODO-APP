@@ -1,10 +1,12 @@
 const REDIRECTS = { '/': './public/index.html' };
 const { HOME_DIR } = require('./constants');
 
+const decodeURI = value => unescape(value).replace(/\+/g, ' ');
+
 const createKeyValue = function(text) {
   const keyValuePair = new Object();
   const splittedText = text.split('&').map(pair => pair.split('='));
-  const assignKeyValue = ([key, value]) => (keyValuePair[key] = value);
+  const assignKeyValue = ([key, value]) => (keyValuePair[key] = decodeURI(value));
   splittedText.forEach(assignKeyValue);
   return keyValuePair;
 };

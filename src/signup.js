@@ -13,8 +13,6 @@ const writeUserDetails = function(users, usersTodo) {
   fs.writeFileSync(USERS_TODOS_PATH, JSON.stringify(usersTodo), UTF8);
 };
 
-// const decode = content => decodeURIComponent(content.replace('+', ' '));
-
 const createNewUser = function(cache, res, userDetails) {
   const { name, userid, password } = userDetails;
   cache.users[userid] = { name, password };

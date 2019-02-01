@@ -18,6 +18,7 @@ const writeAndRespond = function(res, usersTodo, content) {
 };
 
 const getCurrentUser = function(cache, req) {
+  
   const sessionId = req.cookies.session;
   return cache.sessions[sessionId];
 };

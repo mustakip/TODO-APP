@@ -25,7 +25,7 @@ const addTask = function() {
 };
 
 const getUserTasks = function() {
-  doFetchRequest('/getTodo',{}, displayNameAndTasks);
+  doFetchRequest('/getTodo', {}, displayNameAndTasks);
 };
 
 const editTitle = function() {
@@ -68,6 +68,14 @@ const fetchTitleAndDescription = function() {
 
 const doFetchRequest = function(url, headers, callback) {
   fetch(url, headers)
-    .then(res => res.json())
-    .then(content => callback(content));
+    .then(res => {
+      if (res.redirected) {
+        window.location.href = res.url;
+        return;
+      }
+      return res.json();
+    })
+    .then(content => {
+      callback(content);
+    });
 };

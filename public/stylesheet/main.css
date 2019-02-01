@@ -19,14 +19,12 @@
 .welcome_page{
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  padding-top: 100px;
+  padding-bottom: 152px;
   text-align: center;
+  background: #f6cd61;
+  color: #4a4e4d;
 }
-
-
-/* .login_form{
-  margin: 150px auto;
-}  */
 
 .buttons{
   margin: 5px;
@@ -138,7 +136,7 @@ button{
 
 button:hover{
   cursor: pointer;
-  background: #f6cd61;
+  background: #be8d11;
 }
 
 a{

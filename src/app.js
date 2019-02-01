@@ -30,7 +30,7 @@ const cache = initialiseCache();
 app.use(logRequest);
 app.use(readPostBody);
 app.use(readCookie);
-app.get('/', redirect.bind(null, cache));
+app.use(redirect.bind(null, cache));
 app.get('/todos', provideTodos.bind(null, cache));
 app.get('/getTodo', provideCurrentTodo.bind(null, cache));
 app.post('/signup', signupHandler.bind(null, cache));

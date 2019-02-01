@@ -1,9 +1,5 @@
 const fs = require('fs');
-const {
-  NOT_FOUND_MESSAGE,
-  HOME_PAGE,
-  INDEX_PAGE
-} = require('./constants');
+const { NOT_FOUND_MESSAGE, HOME_PAGE, INDEX_PAGE } = require('./constants');
 const {
   redirectTo,
   send,
@@ -11,12 +7,38 @@ const {
   resolveRequestedRoute
 } = require('./utils');
 
+const restrictedURLsWhenLoggedIn = [
+  '/',
+  '/index.html',
+  '/login.html',
+  '/signup.html'
+];
+
+const restrictedURLsWhenNotLoggedIn = [
+  '/home.html',
+  'todo.html',
+  '/todos',
+  '/getTodo',
+  '/renderTodo',
+  '/createTodo',
+  '/addTask',
+  '/deleteTodo',
+  '/editTitle',
+  '/editDescription',
+  '/editTask',
+  '/deleteTask',
+  '/toggleStatus',
+  '/logout',
+  '/javascript/fetch.js',
+  '/javascript/main.js',
+  '/javascript/usersTodo.js',
+  '/javascript/utils/htmlEntities.js'
+];
+
 const logRequest = function(req, res, next) {
   console.log(req.method, req.url);
   next();
 };
-
-
 
 const serveFile = function(req, res) {
   const requestedRoute = resolveRequestedRoute(req.url);
@@ -48,13 +70,19 @@ const readPostBody = function(req, res, next) {
   });
 };
 
-
-const redirect = function(cache, req, res) {
+const redirect = function(cache, req, res, next) {
   const cookie = req.cookies.session;
-  if (isValidCookie(cache, cookie)) {
-    return redirectTo(res, HOME_PAGE);
+  if (restrictedURLsWhenLoggedIn.includes(req.url)) {
+    if (isValidCookie(cache, cookie)) {
+      return redirectTo(res, HOME_PAGE);
+    }
   }
-  redirectTo(res, INDEX_PAGE);
+  if (restrictedURLsWhenNotLoggedIn.includes(req.url)) {
+    if (!isValidCookie(cache, cookie)) {
+      return redirectTo(res, INDEX_PAGE);
+    }
+  }
+  next();
 };
 
 module.exports = {
