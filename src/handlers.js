@@ -34,7 +34,8 @@ const restrictedURLsWhenNotLoggedIn = [
   '/javascript/fetch.js',
   '/javascript/main.js',
   '/javascript/usersTodo.js',
-  '/javascript/utils/htmlEntities.js'
+  '/javascript/utils/htmlEntities.js',
+  '/javascript/userTask.js'
 ];
 
 const logRequest = function(req, res, next) {
