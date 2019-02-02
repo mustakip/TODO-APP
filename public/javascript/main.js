@@ -2,7 +2,6 @@ const getTodoDiv = document => document.getElementById('todo_list');
 const getTask = document => document.getElementById('task').value;
 const createElement = element => document.createElement(element);
 const EMPTY = '';
-const DELETE_UNICODE = '&#x274C';
 
 const renderTodoPage = function(id) {
   fetch('/renderTodo', {
