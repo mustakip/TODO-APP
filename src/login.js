@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { SESSIONS_PATH, UTF8, HOME_PAGE, LOGIN_PAGE } = require('./constants');
-const { createKeyValue, redirectTo } = require('./utils');
+const { createKeyValue } = require('./utils');
 
 const addSession = function(cache, userid, cookie) {
   cache.sessions[cookie] = userid;

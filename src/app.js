@@ -1,14 +1,10 @@
 const Express = require('express');
+const cookieParser = require('cookie-parser');
 const { loginHandler } = require('./login');
 const { signupHandler } = require('./signup');
 const { initialiseCache } = require('./cache');
 const app = new Express();
-const {
-  logRequest,
-  readPostBody,
-  readCookie,
-  redirect
-} = require('./handlers');
+const { logRequest, readPostBody, redirect } = require('./handlers');
 const {
   createTodo,
   addTask,
@@ -28,7 +24,7 @@ const cache = initialiseCache();
 
 app.use(logRequest);
 app.use(readPostBody);
-app.use(readCookie);
+app.use(cookieParser());
 app.use(redirect.bind(null, cache));
 app.get('/todos', provideTodos.bind(null, cache));
 app.get('/getTodo', provideCurrentTodo.bind(null, cache));

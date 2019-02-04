@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { createKeyValue, redirectTo } = require('./utils');
+const { createKeyValue } = require('./utils');
 const { UTF8, USER_JSON_PATH, USERS_TODOS_PATH } = require('./constants');
 const TodoList = require('./model/todoList');
 
