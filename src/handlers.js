@@ -1,10 +1,5 @@
 const { HOME_PAGE, INDEX_PAGE } = require('./constants');
-const {
-  redirectTo,
-  send,
-  isValidCookie,
-  resolveRequestedRoute
-} = require('./utils');
+const { isValidCookie } = require('./utils');
 
 const restrictedURLsWhenLoggedIn = [
   '/',
@@ -66,20 +61,18 @@ const redirect = function(cache, req, res, next) {
   const cookie = req.cookies.session;
   if (restrictedURLsWhenLoggedIn.includes(req.url)) {
     if (isValidCookie(cache, cookie)) {
-      return redirectTo(res, HOME_PAGE);
+      return res.redirect(HOME_PAGE);
     }
   }
   if (restrictedURLsWhenNotLoggedIn.includes(req.url)) {
     if (!isValidCookie(cache, cookie)) {
-      return redirectTo(res, INDEX_PAGE);
+      return res.redirect(INDEX_PAGE);
     }
   }
   next();
 };
 
 module.exports = {
-  resolveRequestedRoute,
-  send,
   logRequest,
   readPostBody,
   readCookie,

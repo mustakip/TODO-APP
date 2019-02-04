@@ -15,13 +15,13 @@ const renderHome = function(cache, userid, res) {
   const cookie = new Date().getTime();
   addSession(cache, userid, cookie);
   res.setHeader('Set-Cookie', `session=${cookie}`);
-  redirectTo(res, HOME_PAGE);
+  res.redirect(HOME_PAGE);
 };
 
 const loginHandler = function(cache, req, res) {
   const { userid, password } = createKeyValue(req.body);
   if (isValidUser(cache, userid, password)) return renderHome(cache, userid, res);
-  redirectTo(res, LOGIN_PAGE);
+  res.redirect(LOGIN_PAGE);
 };
 
 module.exports = { loginHandler };

@@ -6,8 +6,7 @@ const {
   HOME_PAGE,
   INTERNAL_SERVER_ERROR
 } = require('./constants');
-const { send } = require('./handlers');
-const { redirectTo, createKeyValue, resolveMIMEType } = require('./utils');
+const { createKeyValue } = require('./utils');
 
 const initialiseTodo = function(requestBody) {
   const todoDetails = createKeyValue(requestBody);
@@ -16,15 +15,15 @@ const initialiseTodo = function(requestBody) {
   return todoDetails;
 };
 
-const writeFile = function(path, content) {
+const writeFile = function(res, path, content) {
   fs.writeFile(path, content, err => {
-    if (err) send(res, INTERNAL_SERVER_ERROR, resolveMIMEType(), 500);
+    if (err) res.send(INTERNAL_SERVER_ERROR);
   });
 };
 
 const writeAndRespond = function(res, usersTodo, content) {
-  writeFile(USERS_TODOS_PATH, JSON.stringify(usersTodo));
-  send(res, JSON.stringify(content), resolveMIMEType('json'));
+  writeFile(res, USERS_TODOS_PATH, JSON.stringify(usersTodo));
+  res.send(JSON.stringify(content));
 };
 
 const getCurrentUser = function(cache, req) {
@@ -37,8 +36,8 @@ const createTodo = function(cache, req, res) {
   const todoDetails = initialiseTodo(req.body);
   const todo = new Todo(todoDetails);
   cache.usersTodo[currentUser].addTodo(todo);
-  writeFile(USERS_TODOS_PATH, JSON.stringify(cache.usersTodo));
-  redirectTo(res, HOME_PAGE);
+  writeFile(res, USERS_TODOS_PATH, JSON.stringify(cache.usersTodo));
+  res.redirect(HOME_PAGE);
 };
 
 const deleteTodo = function(cache, req, res) {
@@ -80,7 +79,7 @@ const provideTodos = function(cache, req, res) {
   const currentUser = getCurrentUser(cache, req);
   const username = users[currentUser].name;
   const todo = cache.usersTodo[currentUser];
-  send(res, JSON.stringify({ username, todo }), resolveMIMEType('json'));
+  res.send(JSON.stringify({ username, todo }));
 };
 
 const provideCurrentTodo = function(cache, req, res) {
@@ -89,7 +88,7 @@ const provideCurrentTodo = function(cache, req, res) {
   const username = users[currentUser].name;
   const todoId = req.cookies.todo;
   const todo = cache.usersTodo[currentUser].todoLists[todoId];
-  send(res, JSON.stringify({ username, todo }), resolveMIMEType('json'));
+  res.send(JSON.stringify({ username, todo }));
 };
 
 const editTask = function(cache, req, res) {
@@ -119,10 +118,10 @@ const toggleStatus = function(cache, req, res) {
   writeAndRespond(res, cache.usersTodo, currentTodo);
 };
 
-const deleteSession = function(cache, req) {
+const deleteSession = function(cache, req, res) {
   const sessionId = req.cookies.session;
   delete cache.sessions[sessionId];
-  writeFile(SESSIONS_PATH, JSON.stringify(cache.sessions));
+  writeFile(res, SESSIONS_PATH, JSON.stringify(cache.sessions));
 };
 
 const renderTodo = function(cache, req, res) {
@@ -132,10 +131,10 @@ const renderTodo = function(cache, req, res) {
 };
 
 const logoutHandler = function(cache, req, res) {
-  deleteSession(cache, req);
+  deleteSession(cache, req, res);
   const expiryDate = new Date().toUTCString();
   res.setHeader('Set-Cookie', `session=;expires=${expiryDate}`);
-  redirectTo(res, '/');
+  res.redirect('/');
 };
 
 module.exports = {

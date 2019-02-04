@@ -18,13 +18,12 @@ const createNewUser = function(cache, res, userDetails) {
   cache.users[userid] = { name, password };
   cache.usersTodo[userid] = new TodoList({ id: 0, todoLists: {} });
   writeUserDetails(cache.users, cache.usersTodo);
-  redirectTo(res, '/login.html');
+  res.redirect('/login.html');
 };
 
 const signupHandler = function(cache, req, res) {
   const userDetails = createKeyValue(req.body);
-  if (doesUserExists(cache, userDetails.userid))
-    return redirectTo(res, '/signup.html');
+  if (doesUserExists(cache, userDetails.userid)) return res.redirect('/signup.html');
   createNewUser(cache, res, userDetails);
 };
 
