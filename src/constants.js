@@ -1,5 +1,4 @@
 const HOME_DIR = './public';
-const NOT_FOUND_MESSAGE = 'PAGE NOT FOUND';
 const UTF8 = 'utf8';
 const USER_JSON_PATH = './private/users.json';
 const USERS_TODOS_PATH = './private/todo.json';
@@ -27,7 +26,6 @@ const MIME_TYPES = {
 
 module.exports = {
   HOME_DIR,
-  NOT_FOUND_MESSAGE,
   UTF8,
   USER_JSON_PATH,
   USERS_TODOS_PATH,

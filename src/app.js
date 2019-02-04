@@ -4,7 +4,6 @@ const { signupHandler } = require('./signup');
 const { initialiseCache } = require('./cache');
 const app = new Express();
 const {
-  serveFile,
   logRequest,
   readPostBody,
   readCookie,
@@ -45,6 +44,6 @@ app.post('/editTask', editTask.bind(null, cache));
 app.post('/deleteTask', deleteTask.bind(null, cache));
 app.post('/toggleStatus', toggleStatus.bind(null, cache));
 app.post('/logout', logoutHandler.bind(null, cache));
-app.use(serveFile);
+app.use(Express.static('public'));
 
 module.exports = app;

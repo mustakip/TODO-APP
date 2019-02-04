@@ -36,16 +36,11 @@ const resolveMIMEType = function(fileExtension) {
   return MIME_TYPES[fileExtension] || MIME_TEXT_PLAIN;
 };
 
-const getFileExtension = function(filename) {
-  return filename.split('.').pop();
-};
-
 module.exports = {
   createKeyValue,
   redirectTo,
   send,
   resolveRequestedRoute,
   isValidCookie,
-  resolveMIMEType,
-  getFileExtension
+  resolveMIMEType
 };

@@ -1,12 +1,9 @@
-const fs = require('fs');
-const { NOT_FOUND_MESSAGE, HOME_PAGE, INDEX_PAGE } = require('./constants');
+const { HOME_PAGE, INDEX_PAGE } = require('./constants');
 const {
   redirectTo,
   send,
   isValidCookie,
-  resolveRequestedRoute,
-  resolveMIMEType,
-  getFileExtension
+  resolveRequestedRoute
 } = require('./utils');
 
 const restrictedURLsWhenLoggedIn = [
@@ -41,15 +38,6 @@ const restrictedURLsWhenNotLoggedIn = [
 const logRequest = function(req, res, next) {
   console.log(req.method, req.url);
   next();
-};
-
-const serveFile = function(req, res) {
-  const requestedRoute = resolveRequestedRoute(req.url);
-  const fileExtension = getFileExtension(requestedRoute);
-  fs.readFile(requestedRoute, (error, content) => {
-    if (error) return send(res, NOT_FOUND_MESSAGE, resolveMIMEType(), 404);
-    send(res, content, resolveMIMEType(fileExtension));
-  });
 };
 
 const readCookie = function(req, res, next) {
@@ -90,7 +78,6 @@ const redirect = function(cache, req, res, next) {
 };
 
 module.exports = {
-  serveFile,
   resolveRequestedRoute,
   send,
   logRequest,
