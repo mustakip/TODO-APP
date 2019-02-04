@@ -9,6 +9,15 @@ const {
 const TodoList = require('./model/todoList');
 const Todo = require('./model/todo');
 
+const initializeDataDirectory = function() {
+  if (!fs.existsSync('./private')) {
+    fs.mkdirSync('./private');
+    fs.writeFileSync('./private/sessions.json', '{}');
+    fs.writeFileSync('./private/todo.json', '{}');
+    fs.writeFileSync('./private/users.json', '{}');
+  }
+};
+
 const getSessions = function() {
   const sessions = fs.readFileSync(SESSIONS_PATH, UTF8);
   return JSON.parse(sessions);
@@ -41,6 +50,7 @@ const retainTodoListMethods = function(userIds, usersTodo) {
   return usersTodo;
 };
 const initialiseCache = function() {
+  initializeDataDirectory();
   const usersTodo = getUsersTodo();
   const users = getUsers();
   const sessions = getSessions();
