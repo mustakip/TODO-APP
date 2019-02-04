@@ -3,7 +3,6 @@ const fs = require('fs');
 const {
   USERS_TODOS_PATH,
   SESSIONS_PATH,
-  UTF8,
   HOME_PAGE,
   INTERNAL_SERVER_ERROR
 } = require('./constants');

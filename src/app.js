@@ -1,4 +1,4 @@
-const Express = require('./express');
+const Express = require('express');
 const { loginHandler } = require('./login');
 const { signupHandler } = require('./signup');
 const { initialiseCache } = require('./cache');
@@ -47,4 +47,4 @@ app.post('/toggleStatus', toggleStatus.bind(null, cache));
 app.post('/logout', logoutHandler.bind(null, cache));
 app.use(serveFile);
 
-module.exports = app.handleRequest.bind(app);
+module.exports = app;
