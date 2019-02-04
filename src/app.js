@@ -1,9 +1,9 @@
 const Express = require('express');
+const app = new Express();
 const cookieParser = require('cookie-parser');
 const { loginHandler } = require('./login');
 const { signupHandler } = require('./signup');
 const { initialiseCache } = require('./cache');
-const app = new Express();
 const { logRequest, readPostBody, redirect } = require('./handlers');
 const {
   createTodo,

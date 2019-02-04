@@ -126,14 +126,14 @@ const deleteSession = function(cache, req, res) {
 
 const renderTodo = function(cache, req, res) {
   const todoId = req.body;
-  res.setHeader('Set-Cookie', `todo=${todoId}`);
+  res.append('Set-Cookie', `todo=${todoId}`);
   res.end();
 };
 
 const logoutHandler = function(cache, req, res) {
   deleteSession(cache, req, res);
-  const expiryDate = new Date().toUTCString();
-  res.setHeader('Set-Cookie', `session=;expires=${expiryDate}`);
+  res.clearCookie('session');
+  res.clearCookie('todo');
   res.redirect('/');
 };
 
