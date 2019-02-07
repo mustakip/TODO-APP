@@ -17,6 +17,13 @@ jobs:
     - run:
         name: run-tests
         command: npm run unit
+
+workflows:
+  jobs:
+    -build_unit
+
+    
+
   # build_unit_on_latest:
   #   docker:
   #   - image: circleci/node:10.15.1
