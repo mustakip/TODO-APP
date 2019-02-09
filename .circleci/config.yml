@@ -18,8 +18,3 @@ jobs:
           name: run-tests
           command: npm run test
 
-  workflows:
-  version: 1
-  build_parallely:
-    jobs:
-      - build_test
